@@ -1,0 +1,45 @@
+Each player records his cards
+
+Scarlet's turn
+R2 - 2W
+	Only choice
+
+Plum
+R3 - 3S
+	Only choice	
+
+Green
+R1 - E1
+	Only Choice
+
+Scarlet
+R2 - W2
+	Only choice
+
+Plum
+R5 - S3, E2
+	Go to study, does not have
+Suggest 
+	Study (?)
+	Rope (Control)
+	Peackock (Random nonplayer/self so no pulling)
+Green shows Peacock, only card he has
+
+Green
+R6 - N2, 4E (Heading to Ballroom, closest & doesnt't have)
+	Lands on door space
+
+Scarlet
+R2 - W2 (Heading to Lounge, closest & doesn't have)
+
+Plum
+Secret Passage to Kitchen (doesn't have)
+Suggest
+	Kitchen (?)
+	Plum (No pulling, random himself/nonplayer - Peacock b/c seen)
+	Revolver (control, not same twice)
+Green shows Plum, only card he has
+
+Green
+R3 - Currently on door space, goes in Ballroom
+
