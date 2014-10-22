@@ -1,5 +1,6 @@
 import random
 from functions import *
+from time import *
 
 rooms = ["Conservatory", "Ballroom", "Kitchen", "Billiard Room", \
          "Dining Room", "Library", "Study", "Hall", "Lounge"]
@@ -86,6 +87,7 @@ def createGrid(board):
 
     return boardDict
 
+
 def bfs(graph, start, end):
     # maintain a queue of paths
     queue = []
@@ -94,30 +96,29 @@ def bfs(graph, start, end):
     while queue:
         # get the first path from the queue
         path = queue.pop(0)
-        already = path
-        # get the last node from the path
+        # get the last nBode from the path
         node = path[-1]
         # path found
         if node == end:
             return path
         # enumerate all adjacent nodes, construct a new path and push it into the queue
         for adjacent in graph.get(node, []):
-            if adjacent not in already:
+            if adjacent not in path:
                 new_path = list(path)
                 new_path.append(adjacent)
                 queue.append(new_path)
-
-
 
 board = fillBoard()
 
 boardDict = createGrid(board)
 
+#DEBUG
 # for key in boardDict:
 #     print (key, "-->", boardDict[key])
-start = input("Starting location: ")
-end = input("Ending location: ")
-print (bfs(boardDict, start, end))
+# start = input("Starting location: ")
+# end = input("Ending location: ")
+#
+# print(bfsCheck(boardDict, start, end))
 
 
 
