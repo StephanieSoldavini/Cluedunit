@@ -28,10 +28,16 @@ def suggest(who, what, where, byWhom):
 # Can the person to the left show?
     # Yes
         # Record their card
-        #
+        # 
     # No
-    # They have none of the three
-    # Can the next person to the left show?
-        # Yes
+        # They have none of the three
+        # Can the next person to the left show?
+            # Yes
 
-	
+
+# for p in players:
+#     if p.canshow(suggestion):
+#         
+#         return p
+#     else:
+#         p does not have any of the suggested cards                

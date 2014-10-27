@@ -6,11 +6,12 @@ players = []
 characters = cards.characters 
 
 class Player:
-    def __init__(self, name, character, order, location):
+    def __init__(self, name, character, order, location, cards):
         self.name = name
         self.character = character
         self.order = order
         self.location = location
+        self.cards = cards
         players.append(self)
         
     def __repr__(self):
@@ -69,6 +70,7 @@ class Player:
 
 
 def createPlayers():
+    tempChars = characters[:]
     numChar = int(input("Enter number of players (3 to 6): "))
     if numChar < 3 or numChar > 6:
         print ("Invalid number of players.")
@@ -82,22 +84,22 @@ def createPlayers():
         else:           
             for people in range(numChar - numComp):
                 name = input("What is player {}'s name? ".format(people))
-                print ("Remaining characters:", \
-                        ["{} = {}".format(a.abbr, a.name) for a in characters])
+                print ("Remaining tempChars:", \
+                        ["{} = {}".format(a.abbr, a.name) for a in tempChars])
                 charName = input("What character will you be? ").capitalize()
-                for x in characters:
+                for x in tempChars:
                     if x.abbr == charName:
                         character = x
-                        characters.remove(x)
-                Player(name, character, 0, None)
+                        tempChars.remove(x)
+                Player(name, character, 0, None, [])
                 
             for c in range(numComp):
                 name = "Comp{}".format(c)
-                character = characters[random.randint(0, len(characters) - 1)]
-                Player(name, character, 0, None)
+                character = tempChars[random.randint(0, len(tempChars) - 1)]
+                Player(name, character, 0, None, [])
                 
-                characters.remove(character)
-            print (players) 
+                tempChars.remove(character)
+            print (players)       
 
 #createCharacters()
 

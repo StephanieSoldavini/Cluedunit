@@ -1,4 +1,5 @@
 from functions import *
+import random
 
 characters = []
 weapons = []
@@ -86,8 +87,21 @@ def createCard(heldBy, what):
 
     return Card(heldBy, [heldBy], typeOfCard, what)
 
+def makeSolutionAndDeal(characters, weapons, rooms, players):
+    solution = []
+    solution.append(characters.pop(random.randint(0, (len(characters) - 1))))
+    solution.append(weapons.pop(random.randint(0, (len(weapons) - 1))))
+    solution.append(rooms.pop(random.randint(0, (len(rooms) - 1))))
+    cards = characters + weapons + rooms
+    while cards != []:
+        for p in players:
+            if cards != []:
+                p.cards.append(cards.pop(random.randint(0, (len(cards) - 1))))
+    print (solution)
 
 
+# createEverything()
+# makeSolutionAndDeal(characters, weapons, rooms, [a, b, c])    
 
 
 
