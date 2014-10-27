@@ -84,7 +84,7 @@ def createPlayers():
         else:           
             for people in range(numChar - numComp):
                 name = input("What is player {}'s name? ".format(people))
-                print ("Remaining tempChars:", \
+                print ("Remaining characters:", \
                         ["{} = {}".format(a.abbr, a.name) for a in tempChars])
                 charName = input("What character will you be? ").capitalize()
                 for x in tempChars:

@@ -88,11 +88,14 @@ def createCard(heldBy, what):
     return Card(heldBy, [heldBy], typeOfCard, what)
 
 def makeSolutionAndDeal(characters, weapons, rooms, players):
+    tempChars = characters[:]
+    tempWeaps = weapons[:]
+    tempRooms = rooms[:]
     solution = []
-    solution.append(characters.pop(random.randint(0, (len(characters) - 1))))
-    solution.append(weapons.pop(random.randint(0, (len(weapons) - 1))))
-    solution.append(rooms.pop(random.randint(0, (len(rooms) - 1))))
-    cards = characters + weapons + rooms
+    solution.append(tempChars.pop(random.randint(0, (len(tempChars) - 1))))
+    solution.append(tempWeaps.pop(random.randint(0, (len(tempWeaps) - 1))))
+    solution.append(tempRooms.pop(random.randint(0, (len(tempRooms) - 1))))
+    cards = tempChars + tempWeaps + tempRooms
     while cards != []:
         for p in players:
             if cards != []:

@@ -12,12 +12,15 @@ def main():
 	boardFunctions.fillBoard()
 	cards.createEverything()
 	playerFunctions.createPlayers()
+	
 	print ("Characters:", cards.characters)
 	print ("Weapons:", cards.weapons)
 	print ("Rooms:", cards.rooms)
-	cards.makeSolutionAndDeal(cards.characters, cards.weapons, cards.rooms, playerFunctions.players)
+	cards.makeSolutionAndDeal(cards.characters, cards.weapons, cards.rooms, \
+		playerFunctions.players)
 	for p in playerFunctions.players:
 		print ("{}'s cards:".format(p), p.cards)
+	
 	for i in range(len(playerFunctions.players)):
 		p = playerFunctions.players[i]
 		# Suggestion
