@@ -4,7 +4,7 @@ import cards
 import notes
 
 
-players = players
+players = playerFunctions.players
 # #if suggestion made here previously:
 ##    take secret passage or roll/move
 ##
@@ -28,12 +28,15 @@ def main():
         # Suggestion
         print("It is {}'s turn".format(p))
         suggestion = p.makeSuggestion()
-        j = i
+        j = i + 1
         shown = False
-        while shown == False:
+        while shown == False and j != i:
             j = (j+1)%len(players)
-            shown = players[j].showCard(p, suggestion)
-        print(players[j], shown)
+            shown = players[j - 1].showCard(p, suggestion)
+        if shown:
+            print(players[j - 1], shown)
+        else:
+            print("No one can show.")
 
 main()
 
