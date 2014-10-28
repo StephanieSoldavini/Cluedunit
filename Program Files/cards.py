@@ -16,12 +16,12 @@ class Character:
         return self.name
 
 def createCharacters():
-    White   = Character("Mrs. White",   "Wh", "white",  "")    
+    White   = Character("Mrs. White",   "Wh", "white",  "")
     Scarlet = Character("Ms. Scarlet",  "Sc", "red",    "")
     Mustard = Character("Col. Mustard", "Mu", "yellow", "")
     Green   = Character("Mr. Green",    "Gr", "green",  "")
     Peacock = Character("Mrs. Peacock", "Pe", "blue",   "")
-    Plum    = Character("Prof. Plum",   "Pl", "purple", "")   
+    Plum    = Character("Prof. Plum",   "Pl", "purple", "")
     
 
 class Weapon:
@@ -39,7 +39,7 @@ def createWeapons():
     leadPipe    = Weapon("Lead Pipe",   "")
     revolver    = Weapon("Revolver",    "") 
     rope        = Weapon("Rope",        "") 
-    knife       = Weapon("Knife",       "")             
+    knife       = Weapon("Knife",       "")
 
 class Room:
     def __init__(self, name):
