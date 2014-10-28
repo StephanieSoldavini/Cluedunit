@@ -26,14 +26,14 @@ class Player:
 
         # # go to a room if:
 
-"""    # #   you have it
+    # #   you have it
     ##   never seen
     ##   NOT if seen from someone else
 
     ##find closest room that fits above condition, that is destination
 
     ##if a piece is in a location, make that location impassable 
-"""
+
     def move(self, spaces, destination):
         inNewRoom = False
         # find the closest doors of current room and detination room
