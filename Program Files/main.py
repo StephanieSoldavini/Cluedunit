@@ -2,7 +2,7 @@ import boardFunctions
 import playerFunctions
 import cards
 import notes
-
+import random
 
 players = playerFunctions.players
 # #if suggestion made here previously:
@@ -13,7 +13,8 @@ players = playerFunctions.players
 def main():
     boardFunctions.fillBoard()
     cards.createEverything()
-    playerFunctions.createPlayers()
+    test = input("Do you want to use premade players? (Y/N)").capitalize()
+    playerFunctions.createPlayersTest(test)
 
     print("Characters:", cards.characters)
     print("Weapons:", cards.weapons)
@@ -27,16 +28,27 @@ def main():
         p = players[i]
         # Suggestion
         print("It is {}'s turn".format(p))
-        suggestion = p.makeSuggestion()
-        j = i + 1
-        shown = False
-        while shown == False and j != i:
-            j = (j+1)%len(players)
-            shown = players[j - 1].showCard(p, suggestion)
-        if shown:
-            print(players[j - 1], shown)
+        if p.human:
+            suggestion = p.makeSuggestion()
+            show(p, i, suggestion)
         else:
-            print("No one can show.")
+            #ai.makesug
+            suggestion = notes.suggest(cards.characters[random.randint(0, len(cards.characters) - 1)],
+                          cards.weapons[random.randint(0, len(cards.weapons) - 1)],
+                          cards.rooms[random.randint(0, len(cards.rooms) - 1)], p)
+            print(suggestion)
+            show(p, i, suggestion)
+
+def show(p, i ,suggestion):
+    j = i + 1
+    shown = False
+    while shown == False and j != i:
+        j = (j+1)%len(players)
+        shown = players[j - 1].showCard(p, suggestion)
+    if shown:
+        print("{} shows {} to {}".format(players[j - 1], shown, players[i]))
+    else:
+        print("No one can show.")
 
 main()
 

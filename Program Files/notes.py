@@ -12,8 +12,8 @@ class Suggestion:
         suggestions.append(self)
 
     def __repr__(self):
-        return str(self.byWhom) + " suggests " + self.who + " with the " + \
-               self.what + " in the " + self.where + "."
+        return str(self.byWhom) + " suggests " + str(self.who) + " with the " + \
+               str(self.what) + " in the " + str(self.where) + "."
 
 class Notes:
     def __init__(self, have, ownGuess, ):

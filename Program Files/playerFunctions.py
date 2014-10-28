@@ -9,9 +9,10 @@ rooms = cards.rooms
 
 
 class Player:
-    def __init__(self, name, character, order, location, cards):
+    def __init__(self, name, character, human, order, location, cards):
         self.name = name
         self.character = character
+        self.human = human #boolean
         self.order = order
         self.location = location
         self.cards = cards
@@ -25,14 +26,14 @@ class Player:
 
         # # go to a room if:
 
-    # #   you have it
+"""    # #   you have it
     ##   never seen
     ##   NOT if seen from someone else
 
     ##find closest room that fits above condition, that is destination
 
     ##if a piece is in a location, make that location impassable 
-
+"""
     def move(self, spaces, destination):
         inNewRoom = False
         # find the closest doors of current room and detination room
@@ -70,13 +71,28 @@ class Player:
 
     def showCard(self, showTo, sug):
         sugSet = {sug.who, sug.what, sug.where}
+        #DEBUG
+        print("Suggestion set:", sugSet)
         hasSet = set(self.cards)
+        #DEBUG
+        print("Has set:", hasSet)
         canShow = hasSet & sugSet
+        #DEBUG
+        print("Can show:", canShow)
         if canShow:
-            return random.sample(canShow, 1)
+            if self.human:
+                if len(canShow) > 1:
+                    cardToShow = input("You can show {}. Which one would you like to? ".format(canShow)).capitalize()
+                else:
+                    cardToShow = canShow
+                    input("{} must show {}. Hit enter to do so ".format(self.character, canShow))
+            else:
+                cardToShow = random.sample(canShow, 1)
+            return cardToShow
             #ai.pickcard()
         else:
             return False
+
 
 def findObject(what):
     what = what.capitalize()
@@ -95,39 +111,51 @@ def findObject(what):
 
     return what
 
-def createPlayers():
+def createPlayers(numChar, numComp):
     tempChars = characters[:]
-    numChar = int(input("Enter number of players (3 to 6): "))
-    if numChar < 3 or numChar > 6:
-        print("Invalid number of players.")
-        createPlayers()
-    else:
-        numComp = int(input("How many of those are computers? (0 to {}) " \
-                            .format(numChar - 1)))
-        if numComp not in range(numChar):
-            print("Invalid number of computers.")
-            createPlayers()
-        else:
-            for people in range(numChar - numComp):
-                name = input("What is player {}'s name? ".format(people))
-                print("Remaining characters:", \
-                      ["{} = {}".format(a.abbr, a.name) for a in tempChars])
-                charName = input("What character will you be? ").capitalize()
-                for x in tempChars:
-                    if x.abbr == charName:
-                        character = x
-                        tempChars.remove(x)
-                Player(name, character, 0, None, [])
+    for people in range(numChar - numComp):
+        name = input("What is player {}'s name? ".format(people))
+        print("Remaining characters:", \
+              ["{} = {}".format(a.abbr, a.name) for a in tempChars])
+        charName = input("What character will you be? ").capitalize()
+        for x in tempChars:
+            if x.abbr == charName:
+                character = x
+                tempChars.remove(x)
+        Player(name, character, True, 0, None, [])
 
-            for c in range(numComp):
-                name = "Comp{}".format(c)
-                character = tempChars[random.randint(0, len(tempChars) - 1)]
-                Player(name, character, 0, None, [])
+    for c in range(numComp):
+        name = "Comp{}".format(c)
+        character = tempChars[random.randint(0, len(tempChars) - 1)]
+        Player(name, character, False, 0, None, [])
+        tempChars.remove(character)
+    print(players)
 
-                tempChars.remove(character)
-            print(players)
 
         # createCharacters()
+def createPlayersTest(test):
+    tempChars = characters[:]
+    if test == "N":
+        numChar = int(input("Enter number of players (3 to 6): "))
+        if numChar < 3 or numChar > 6:
+            print("Invalid number of players.")
+            createPlayers()
+        else:
+            numComp = int(input("How many of those are computers? (0 to {}): "
+                                .format(numChar - 1)))
+            if numComp not in range(numChar):
+                print("Invalid number of computers.")
+                createPlayers()
+            createPlayers(numChar, numComp)
+    else:
+        #creates 3 human players so I don't have to for testing
+        numChar = 3
+        for c in range(numChar):
+            name = "Player{}".format(c)
+            character = tempChars[random.randint(0, len(tempChars) - 1)]
+            Player(name, character, True, 0, None, [])
+            tempChars.remove(character)
+        print(players)
 
 # createPlayers()
 
