@@ -15,9 +15,14 @@ class Suggestion:
         return str(self.byWhom) + " suggests " + self.who + " with the " + \
                self.what + " in the " + self.where + "."
 
+class Notes:
+    def __init__(self, have, ownGuess, ):
+        pass
+
 
 def suggest(who, what, where, byWhom):
     return Suggestion(who, what, where, byWhom, "", "")
+
 
 
 # print (Suggestion("Plum", "Candlestick", "Conservatory", "Scarlet", "", ""))

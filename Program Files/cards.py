@@ -36,7 +36,7 @@ class Weapon:
 def createWeapons():
     wrench      = Weapon("Wrench",      "")
     candlestick = Weapon("Candlestick", "") 
-    leadPipe    = Weapon("Leap Pipe",   "")  
+    leadPipe    = Weapon("Lead Pipe",   "")
     revolver    = Weapon("Revolver",    "") 
     rope        = Weapon("Rope",        "") 
     knife       = Weapon("Knife",       "")             
@@ -100,7 +100,7 @@ def makeSolutionAndDeal(characters, weapons, rooms, players):
         for p in players:
             if cards != []:
                 p.cards.append(cards.pop(random.randint(0, (len(cards) - 1))))
-    print (solution)
+    print ("Solution:", solution)
 
 
 # createEverything()

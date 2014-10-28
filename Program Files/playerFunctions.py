@@ -3,7 +3,10 @@ import notes
 import cards
 
 players = []
-characters = cards.characters 
+characters = cards.characters
+weapons = cards.weapons
+rooms = cards.rooms
+
 
 class Player:
     def __init__(self, name, character, order, location, cards):
@@ -13,15 +16,16 @@ class Player:
         self.location = location
         self.cards = cards
         players.append(self)
-        
+
     def __repr__(self):
         return self.name + " as " + str(self.character)
 
     def __str__(self):
-        return str(self.character)  
+        return str(self.character)
 
-    ## go to a room if:
-    ##   you have it
+        # # go to a room if:
+
+    # #   you have it
     ##   never seen
     ##   NOT if seen from someone else
 
@@ -45,64 +49,86 @@ class Player:
                 if board[x][y] in rooms:
                     """You are on a door space"""
                     # do you want to go into that room? 
-                        # move piece in that direction
-                        # inNewRoom = True
+                    # move piece in that direction
+                    # inNewRoom = True
                     # else
-                        # move piece in a different direction
+                    # move piece in a different direction
                     pass
                 else:
                     """You are in a hallway space"""
                     # check the y of the destination        
-            spaces -= 1    
+            spaces -= 1
             if destination in rooms:
-                """You want to go to a room"""  
+                """You want to go to a room"""
 
     def makeSuggestion(self):
         ## These inputs need to find the objects they reference
-        who = input("Who? ")
-        what = input("What? ")
-        where = input("Where? ") #should be location
+        who = findObject(input("Who? "))
+        what = findObject(input("What? "))
+        where = findObject(input("Where? "))  #should be location
         return notes.suggest(who, what, where, self)
 
-    def showCard(self, showTo):
-        pass            
+    def showCard(self, showTo, sug):
+        sugSet = {sug.who, sug.what, sug.where}
+        hasSet = set(self.cards)
+        canShow = hasSet & sugSet
+        if canShow:
+            return random.sample(canShow, 1)
+            #ai.pickcard()
+        else:
+            return False
 
+def findObject(what):
+    what = what.capitalize()
+    for w in weapons:
+        if w.name == what:
+            typeOfCard = "weapon"
+            what = w
+    for c in characters:
+        if c.abbr == what:
+            typeOfCard = "character"
+            what = c
+    for r in rooms:
+        if r.name == what:
+            typeOfCard = "room"
+            what = r
 
+    return what
 
 def createPlayers():
     tempChars = characters[:]
     numChar = int(input("Enter number of players (3 to 6): "))
     if numChar < 3 or numChar > 6:
-        print ("Invalid number of players.")
-        exit()
+        print("Invalid number of players.")
+        createPlayers()
     else:
         numComp = int(input("How many of those are computers? (0 to {}) " \
-            .format(numChar - 1)))
+                            .format(numChar - 1)))
         if numComp not in range(numChar):
-            print ("Invalid number of computers.")
-            exit()
-        else:           
+            print("Invalid number of computers.")
+            createPlayers()
+        else:
             for people in range(numChar - numComp):
                 name = input("What is player {}'s name? ".format(people))
-                print ("Remaining characters:", \
-                        ["{} = {}".format(a.abbr, a.name) for a in tempChars])
+                print("Remaining characters:", \
+                      ["{} = {}".format(a.abbr, a.name) for a in tempChars])
                 charName = input("What character will you be? ").capitalize()
                 for x in tempChars:
                     if x.abbr == charName:
                         character = x
                         tempChars.remove(x)
                 Player(name, character, 0, None, [])
-                
+
             for c in range(numComp):
                 name = "Comp{}".format(c)
                 character = tempChars[random.randint(0, len(tempChars) - 1)]
                 Player(name, character, 0, None, [])
-                
+
                 tempChars.remove(character)
-            print (players)       
+            print(players)
 
-#createCharacters()
+        # createCharacters()
 
-#createPlayers()
+# createPlayers()
 
 #print (players[0].makeSuggestion("Plum", "Candlestick", "Conservatory"))            
