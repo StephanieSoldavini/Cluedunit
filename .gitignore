@@ -1,5 +1,5 @@
 Program Files/__pycache__
 Program Files\__pycache__\
-.idea\
+.idea\*
 *.pyc
-.idea/workspace.xml
+.idea\workspace.xml
