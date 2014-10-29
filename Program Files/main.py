@@ -49,6 +49,8 @@ def show(p, i ,suggestion):
         print("{} shows {} to {}".format(players[j - 1], shown, players[i]))
     else:
         print("No one can show.")
+    print()
+
 
 main()
 

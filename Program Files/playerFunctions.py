@@ -117,7 +117,7 @@ def createPlayers(numChar, numComp):
         name = input("What is player {}'s name? ".format(people))
         print("Remaining characters:", \
               ["{} = {}".format(a.abbr, a.name) for a in tempChars])
-        charName = input("What character will you be? ").capitalize()
+        charName = input("What character will you be? ").upper()
         for x in tempChars:
             if x.abbr == charName:
                 character = x
