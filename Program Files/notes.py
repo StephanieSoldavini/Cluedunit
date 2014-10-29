@@ -1,6 +1,5 @@
 suggestions = []
 
-
 class Suggestion:
     def __init__(self, who, what, where, byWhom, whoCantShow, whoShows):
         self.who = who
@@ -19,11 +18,8 @@ class Notes:
     def __init__(self, have, ownGuess, ):
         pass
 
-
 def suggest(who, what, where, byWhom):
     return Suggestion(who, what, where, byWhom, "", "")
-
-
 
 # print (Suggestion("Plum", "Candlestick", "Conservatory", "Scarlet", "", ""))
 
