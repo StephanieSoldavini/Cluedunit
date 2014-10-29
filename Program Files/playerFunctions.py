@@ -72,13 +72,13 @@ class Player:
     def showCard(self, showTo, sug):
         sugSet = {sug.who, sug.what, sug.where}
         #DEBUG
-        print("Suggestion set:", sugSet)
+        #print("Suggestion set:", sugSet)
         hasSet = set(self.cards)
         #DEBUG
-        print("Has set:", hasSet)
+        print("{} has:".format(self), hasSet)
         canShow = hasSet & sugSet
         #DEBUG
-        print("Can show:", canShow)
+        print("{} can show:".format(self), canShow)
         if canShow:
             if self.human:
                 if len(canShow) > 1:
@@ -142,8 +142,8 @@ def createPlayersTest(test):
             createPlayers()
         else:
             numComp = int(input("How many of those are computers? (0 to {}): "
-                                .format(numChar - 1)))
-            if numComp not in range(numChar):
+                                .format(numChar)))
+            if numComp not in range(numChar + 1):
                 print("Invalid number of computers.")
                 createPlayers()
             createPlayers(numChar, numComp)

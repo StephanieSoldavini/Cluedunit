@@ -27,15 +27,17 @@ def main():
     for i in range(len(players)):
         p = players[i]
         # Suggestion
-        print("It is {}'s turn".format(p))
+        print ()
+        print("##### It is {}'s turn. #####".format(p))
         if p.human:
             suggestion = p.makeSuggestion()
             show(p, i, suggestion)
         else:
             #ai.makesug
-            suggestion = notes.suggest(cards.characters[random.randint(0, len(cards.characters) - 1)],
-                          cards.weapons[random.randint(0, len(cards.weapons) - 1)],
-                          cards.rooms[random.randint(0, len(cards.rooms) - 1)], p)
+            suggestion = notes.suggest( \
+                cards.characters[random.randrange(0, len(cards.characters))], \
+                cards.weapons[random.randrange(0, len(cards.weapons))], \
+                cards.rooms[random.randrange(0, len(cards.rooms))], p)
             print(suggestion)
             show(p, i, suggestion)
 
@@ -49,7 +51,6 @@ def show(p, i ,suggestion):
         print("{} shows {} to {}".format(players[j - 1], shown, players[i]))
     else:
         print("No one can show.")
-    print()
 
 
 main()
