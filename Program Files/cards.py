@@ -6,23 +6,13 @@ weapons = []
 rooms = []
 
 class Character:
-    def __init__(self, name, abbr, color, location):
+    def __init__(self, name, abbr, location):
         self.name = name
         self.abbr = abbr
-        self.color = color
         characters.append(self)
         
     def __repr__(self):
         return self.name
-
-def createCharacters():
-    White   = Character("Mrs. White",   "WH", "white",  "")
-    Scarlet = Character("Ms. Scarlet",  "SC", "red",    "")
-    Mustard = Character("Col. Mustard", "MU", "yellow", "")
-    Green   = Character("Mr. Green",    "GR", "green",  "")
-    Peacock = Character("Mrs. Peacock", "PE", "blue",   "")
-    Plum    = Character("Prof. Plum",   "PL", "purple", "")
-    
 
 class Weapon:
     def __init__(self, name, location):
@@ -33,14 +23,6 @@ class Weapon:
     def __repr__(self):
         return self.name
 
-def createWeapons():
-    wrench      = Weapon("Wrench".upper(),      "")
-    candlestick = Weapon("Candlestick".upper(), "") 
-    leadPipe    = Weapon("Lead Pipe".upper(),   "")
-    revolver    = Weapon("Revolver".upper(),    "") 
-    rope        = Weapon("Rope".upper(),        "") 
-    knife       = Weapon("Knife".upper(),       "")
-
 class Room:
     def __init__(self, name):
         self.name = name
@@ -49,16 +31,15 @@ class Room:
     def __repr__(self):
         return self.name
 
-def createRooms():
-    roomSpaces = openFile("inRoom")
-    for room in roomSpaces:
-        name = room[0].strip().upper()
-        Room(name)
-
 def createEverything():
-    createCharacters()
-    createWeapons()
-    createRooms()
+    cards = openFile("cards")
+    for card in cards:
+        if card[0] == "CHARACTER":
+            Character(card[1], card[2], "") 
+        elif card[0] == "WEAPON":
+            Weapon(card[1], "")
+        elif card[0] == "ROOM":
+            Room(card[1])   
 
 class Card:
     def __init__(self, heldBy, seenBy, typeOfCard, what):
