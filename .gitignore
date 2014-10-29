@@ -1,6 +1,10 @@
 Program Files/__pycache__
 Program Files\__pycache__\
-.idea\
+.idea\*
 *.pyc
+<<<<<<< HEAD
 .idea/workspace.xml
 *.xml
+=======
+.idea\workspace.xml
+>>>>>>> FETCH_HEAD
