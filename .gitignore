@@ -3,3 +3,4 @@ Program Files\__pycache__\
 .idea\
 *.pyc
 .idea/workspace.xml
+*.xml

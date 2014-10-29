@@ -95,7 +95,7 @@ class Player:
 
 
 def findObject(what):
-    what = what.capitalize()
+    what = what.upper()
     for w in weapons:
         if w.name == what:
             typeOfCard = "weapon"
