@@ -44,13 +44,13 @@ class ClueGame(Widget):
             self.white.center_y += self.size[0]*(38/1000)
         elif keycode[1] == 'down':
             self.white.center_y -= self.size[0]*(38/1000)
-        print(self.white.center)
+        print("new center", self.white.center)
         return True
 
     def placePiece(self):
-        print(Window.size)
-        self.white.center = (spaceToPixel((14, 0))[0] - 13.5) * (Window.size[0]/1000), (spaceToPixel((14, 0))[1] - 13.5) * (Window.size[0]/1000)
-        print(self.white.center)
+        # print(Window.size)
+        self.white.center = (spaceToPixel((14, 0))[0] - 13.5) * (Window.size[1]/1000), (spaceToPixel((14, 0))[1] - 13.5) * (Window.size[1]/1000)
+        print("center", self.white.center)
 
 def spaceToPixel(space):
     """
@@ -60,6 +60,7 @@ def spaceToPixel(space):
     """
     x_pixel = (55 + (space[0] + .5) * 37.5) * (Window.size[0]/1000)
     y_pixel = (15 + (space[1] + .5) * 37.96) * (Window.size[1]/1000)
+    print("Without scaling", x_pixel, y_pixel)
     return x_pixel, y_pixel
         
 
