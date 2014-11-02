@@ -49,7 +49,8 @@ class ClueGame(Widget):
 
     def placePiece(self):
         # print(Window.size)
-        self.white.center = (spaceToPixel((14, 0))[0] - 13.5) * (Window.size[1]/1000), (spaceToPixel((14, 0))[1] - 13.5) * (Window.size[1]/1000)
+        space = (1,6)
+        self.white.center = (55 -13.5 + (space[0] + .5) * 37.5) * (Window.size[0]/1000), (15 -13.5 + (space[1] + .5) * 37.96) * (Window.size[1]/1000)
         print("center", self.white.center)
 
 def spaceToPixel(space):
@@ -75,7 +76,7 @@ class ClueApp(App):
         game.placePiece()
         return game
 
-size = str(850)
+size = str(500)
 
 if __name__ == '__main__':
     Config.set('graphics', 'fullscreen', '0')
