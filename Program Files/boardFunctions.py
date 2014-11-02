@@ -44,8 +44,8 @@ def fillBoard():
 
     #for row in board:
     #    print (row)
-    return board
     print ("Board created!")
+    return board
 
 boardDict = {}
 
@@ -108,8 +108,8 @@ def bfs(graph, start, end):
                 new_path.append(adjacent)
                 queue.append(new_path)
 
-board = fillBoard()
 
+board = fillBoard()
 boardDict = createGrid(board)
 
 #DEBUG

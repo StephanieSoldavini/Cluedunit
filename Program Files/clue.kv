@@ -10,7 +10,7 @@
             pos: self.pos
     CluePiece:
         id: clue_piece
-        center: self.parent.center
+#        center: 55 -13.5 + (14 + .5) * 37.5, 15 - 13.5  + (0 + .5) * 37.96
         size: (root.height*(3/100), root.height*(3/100)) if root.width > root.height else ((root.width*(3/100), root.width*(3/100)))
         canvas:
             Ellipse:
