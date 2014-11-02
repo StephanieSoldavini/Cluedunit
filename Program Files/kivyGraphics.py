@@ -8,12 +8,14 @@ from kivy.properties import NumericProperty, ReferenceListProperty,\
 from kivy.vector import Vector
 from kivy.clock import Clock
 from kivy.config import Config
+from kivy.core.window import Window
+# from kivy.uix.layout import Relative
 
 class ClueGame(Widget):
     white = ObjectProperty(None)
-    
+
     def __init__(self, **kwargs):
-        super(PongGame, self).__init__(**kwargs)
+        super(ClueGame, self).__init__(**kwargs)
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
 
@@ -23,25 +25,28 @@ class ClueGame(Widget):
 
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
         if keycode[1] == 'right':
-            self.white.center_x += 10
+            self.white.center_x += self.size[0]*(38/1000)
         elif keycode[1] == 'left':
-            self.white.center_x -= 10
+            self.white.center_x -= self.size[0]*(38/1000)
         elif keycode[1] == 'up':
-            self.white.center_y += 10
+            self.white.center_y += self.size[0]*(38/1000)
         elif keycode[1] == 'down':
-            self.white.center_y -= 10
+            self.white.center_y -= self.size[0]*(38/1000)
         return True
 
-
+    def placePiece(self):
+        self.white.center = self.center
         
 
 class CluePiece(Widget):
     def move(self):
+        pass
 
 
 class ClueApp(App):
     def build(self):
         game = ClueGame()
+        game.placePiece()
         return game
 
 size = str(850)
