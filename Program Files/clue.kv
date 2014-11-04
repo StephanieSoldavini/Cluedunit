@@ -1,29 +1,32 @@
 #:kivy 1.0.9
 
+<CluePiece>:
+    canvas:
+        Ellipse:
+            source: 'images/white.png'
+            size: self.size
+            pos: self.pos
+
+<ClueBoard>:
+    canvas:
+        Rectangle:
+            source: 'images/ScanBoardSmall.jpg'
+            pos: self.pos
+            size: self.size
+
 <ClueGame>:
-    id: board
     white: clue_piece
     canvas:
         Rectangle:
-            size: (self.height, self.height) if self.width > self.height else (self.width, self.width)
-            source: 'images/ScanBoardSmall.jpg'
-            pos: self.pos
+            size: self.size
+            pos: self.pos     
+
     CluePiece:
         id: clue_piece
-#        center: 55 -13.5 + (14 + .5) * 37.5, 15 - 13.5  + (0 + .5) * 37.96
-        size: (root.height*(3/100), root.height*(3/100)) if root.width > root.height else ((root.width*(3/100), root.width*(3/100)))
-        canvas:
-            Ellipse:
-                source: 'images/white.png'
-                size:self.size
-                pos:self.pos
+        size: (root.height*(3/100), root.height*(3/100))
 
-
-#    <CluePiece>:
-#        size: board.width*(38/1000), board.height*(38/1000)
-#        canvas:
-#            Ellipse:
-#                source: 'images/white.png'
-#                size:self.size
-#                pos:self.pos
-#
+    ClueBoard:
+        id: clue_board
+        size: root.size #(root.height, root.height) if (root.width > root.height) else (root.width, root.width) 
+        center: root.center
+        #scale: 1, 1

@@ -1,6 +1,6 @@
 def openFile(file):
 	lst = []
-	with open("data/" + file + ".txt", encoding = "utf-8") as f:
+	with open("data/" + file + ".txt") as f:
 
 		for line in f:
 			line = line.strip()
