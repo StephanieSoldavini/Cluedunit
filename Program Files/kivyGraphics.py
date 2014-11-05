@@ -1,3 +1,4 @@
+from __future__ import division
 import kivy
 kivy.require('1.1.1')
 
@@ -60,8 +61,8 @@ class ClueGame(Widget):
 
     def placePiece(self, space):
         # print(Window.size)
-        self.white.center = (55 -13.5 + (space[0] + .5) * 37.5) * (Window.size[0]/1000), (15 -13.5 + (space[1] + .5) * 37.96) * (Window.size[1]/1000)
         self.white.space = space
+        self.white.center = spaceToPixel(space)
         print(self.white.center)
 
 def spaceToPixel(space):
@@ -70,15 +71,21 @@ def spaceToPixel(space):
     :param space: tuple with x first
     :return: tuple with x first
     """
-    x_pixel = (55 + (space[0] + .5) * 37.5) * (Window.size[0]/1000)
-    y_pixel = (15 + (space[1] + .5) * 37.96) * (Window.size[1]/1000)
-    return x_pixel, y_pixel
+    windowSize = Window.size
+    space = (14,0)
+    spaceW = windowSize[0]*(1/26)
+    spaceH = windowSize[1]*(1/27)
+    x_pixel = ((space[0] + 1.5) * spaceW - 10.5) 
+    y_pixel = ((space[1] + 1.5) * spaceH - 11.25)
+    return (x_pixel, y_pixel)
 
 
 class CluePiece(Widget):
     def move(self):
         pass
 
+class ClueBoard(Widget):
+    pass
 
 class ClueApp(App):
     def build(self):
@@ -86,11 +93,11 @@ class ClueApp(App):
         game.placePiece((14,1))
         return game
 
-size = str(850)
 
 if __name__ == '__main__':
     Config.set('graphics', 'fullscreen', '0')
-    Config.set('graphics', 'width', size)
-    Config.set('graphics', 'height', size)
+    Config.set('graphics', 'width', '800')
+    Config.set('graphics', 'height', '850')
+    Config.set('graphics', 'resizable', 0)
     Config.write()
     ClueApp().run() 
