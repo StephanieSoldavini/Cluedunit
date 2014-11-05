@@ -60,9 +60,9 @@ class ClueGame(Widget):
         return True
 
     def placePiece(self, space):
-        # print(Window.size)
         self.white.space = space
-        self.white.center = spaceToPixel(space)
+        place = spaceToPixel(space)
+        self.white.center = (place[0] - 10.5, place[1] - 11.25)
         print(self.white.center)
 
 def spaceToPixel(space):
@@ -72,11 +72,10 @@ def spaceToPixel(space):
     :return: tuple with x first
     """
     windowSize = Window.size
-    space = (14,0)
     spaceW = windowSize[0]*(1/26)
     spaceH = windowSize[1]*(1/27)
-    x_pixel = ((space[0] + 1.5) * spaceW - 10.5) 
-    y_pixel = ((space[1] + 1.5) * spaceH - 11.25)
+    x_pixel = ((space[0] + 1.5) * spaceW) 
+    y_pixel = ((space[1] + 1.5) * spaceH)
     return (x_pixel, y_pixel)
 
 
