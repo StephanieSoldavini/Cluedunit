@@ -35,21 +35,34 @@ class ClueGame(Widget):
         # #DEBUG
         # print(self.white.center)
         # return True
-
-        if keycode[1] == 'right':
-            self.white.center_x += self.size[0]*(38/1000)
-        elif keycode[1] == 'left':
-            self.white.center_x -= self.size[0]*(38/1000)
-        elif keycode[1] == 'up':
-            self.white.center_y += self.size[0]*(38/1000)
-        elif keycode[1] == 'down':
-            self.white.center_y -= self.size[0]*(38/1000)
+        position = self.white.space
+        x_pos = position[0]
+        y_pos = position[1]
+        up = (x_pos, y_pos + 1)
+        down = (x_pos, y_pos - 1)
+        left = (x_pos - 1, y_pos)
+        right = (x_pos + 1, y_pos)
+        if keycode[1] == 'right' and (right in boardFunctions.boardDict[position]):
+            self.white.center = spaceToPixel(right)
+            self.white.space = right
+        elif keycode[1] == 'left' and (left in boardFunctions.boardDict[position]):
+            self.white.center = spaceToPixel(left)
+            self.white.space = left
+        elif keycode[1] == 'up' and (up in boardFunctions.boardDict[position]):
+            self.white.center = spaceToPixel(up)
+            self.white.space = up
+        elif keycode[1] == 'down'and (down in boardFunctions.boardDict[position]):
+            self.white.center = spaceToPixel(down)
+            self.white.space = down
+        elif keycode[1] == 'w':
+            quit(ClueApp())
         return True
 
-    def placePiece(self):
+    def placePiece(self, space):
         # print(Window.size)
-        space = (1,6)
-        self.white.center = self.center #(55 -13.5 + (space[0] + .5) * 37.5) * (Window.size[0]/1000), (15 -13.5 + (space[1] + .5) * 37.96) * (Window.size[1]/1000)
+        self.white.center = (55 -13.5 + (space[0] + .5) * 37.5) * (Window.size[0]/1000), (15 -13.5 + (space[1] + .5) * 37.96) * (Window.size[1]/1000)
+        self.white.space = space
+        print(self.white.center)
 
 def spaceToPixel(space):
     """
@@ -70,10 +83,10 @@ class CluePiece(Widget):
 class ClueApp(App):
     def build(self):
         game = ClueGame()
-        game.placePiece()
+        game.placePiece((14,1))
         return game
 
-size = str(500)
+size = str(850)
 
 if __name__ == '__main__':
     Config.set('graphics', 'fullscreen', '0')

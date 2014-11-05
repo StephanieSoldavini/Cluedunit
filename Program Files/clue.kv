@@ -2,12 +2,13 @@
 
 
 <CluePiece>:
-    size: self.parent.width*(38/1000), self.parent.height*(38/1000)
+    size: self.parent.width*(30/1000), self.parent.height*(30/1000)
     canvas:
         Ellipse:
             source: 'images/white.png'
             size:self.size
             pos:self.pos
+    center: 55 -13.5 + (14 + .5) * 37.5, 15 - 13.5  + (0 + .5) * 37.96
 
 <ClueGame>:
     id: board
@@ -17,6 +18,7 @@
             size: (self.height, self.height) #if self.width > self.height else (self.width, self.width)
             source: 'images/ScanBoardSmall.jpg'
             pos: self.pos
+
     CluePiece:
         id: clue_piece
         #center: 55 -13.5 + (14 + .5) * 37.5, 15 - 13.5  + (0 + .5) * 37.96
