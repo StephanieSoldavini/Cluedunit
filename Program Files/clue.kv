@@ -4,14 +4,14 @@
     canvas:
         Ellipse:
             source: 'images/white.png'
-            size: self.size
-            pos: self.pos
+            pos: root.pos
+            size: (850 * (.03), 850 * (.03))
 
 <ClueBoard>:
     canvas:
         Rectangle:
             source: 'images/ScanBoardSmall.jpg'
-            pos: self.pos
+            pos: self.parent.pos
             size: self.size
 
 <ClueGame>:
@@ -21,12 +21,13 @@
             size: self.size
             pos: self.pos     
 
-    CluePiece:
-        id: clue_piece
-        size: (root.height*(3/100), root.height*(3/100))
-
     ClueBoard:
         id: clue_board
-        size: root.size #(root.height, root.height) if (root.width > root.height) else (root.width, root.width) 
+        size: (root.height, root.height) if (root.width > root.height) else (root.width, root.width) 
         center: root.center
         #scale: 1, 1
+
+    CluePiece:
+        id: clue_piece
+        pos: 582.25, 21.75
+        size: (self.parent.height*(30/100), self.parent.width*(30/100))
