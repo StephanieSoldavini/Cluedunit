@@ -13,8 +13,31 @@ from kivy.core.window import Window
 # from kivy.uix.layout import Relative
 import boardFunctions
 
+class CluePiece(Widget):
+
+    def move(self, keycode):
+        position = self.space
+        x_pos = position[0]
+        y_pos = position[1]
+        up = (x_pos, y_pos + 1)
+        down = (x_pos, y_pos - 1)
+        left = (x_pos - 1, y_pos)
+        right = (x_pos + 1, y_pos)
+        if keycode[1] == 'right' and (right in boardFunctions.boardDict[position]):
+            self.center = spaceToPixel(right)
+            self.space = right
+        elif keycode[1] == 'left' and (left in boardFunctions.boardDict[position]):
+            self.center = spaceToPixel(left)
+            self.space = left
+        elif keycode[1] == 'up' and (up in boardFunctions.boardDict[position]):
+            self.center = spaceToPixel(up)
+            self.space = up
+        elif keycode[1] == 'down'and (down in boardFunctions.boardDict[position]):
+            self.center = spaceToPixel(down)
+            self.space = down
+        print(self.space)
+
 class ClueGame(Widget):
-    white = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super(ClueGame, self).__init__(**kwargs)
@@ -27,43 +50,19 @@ class ClueGame(Widget):
         self._keyboard = None
 
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
-        # # newSpace = input("Space to go to:")
-        # path = boardFunctions.bfs(boardFunctions.boardDict, (14, 1), (16, 5))
-        # #DEBUG
-        # print(path)
-        # for space in path:
-        #     self.white.center = spaceToPixel(space)
-        # #DEBUG
-        # print(self.white.center)
-        # return True
-        position = self.white.space
-        x_pos = position[0]
-        y_pos = position[1]
-        up = (x_pos, y_pos + 1)
-        down = (x_pos, y_pos - 1)
-        left = (x_pos - 1, y_pos)
-        right = (x_pos + 1, y_pos)
-        if keycode[1] == 'right' and (right in boardFunctions.boardDict[position]):
-            self.white.center = spaceToPixel(right)
-            self.white.space = right
-        elif keycode[1] == 'left' and (left in boardFunctions.boardDict[position]):
-            self.white.center = spaceToPixel(left)
-            self.white.space = left
-        elif keycode[1] == 'up' and (up in boardFunctions.boardDict[position]):
-            self.white.center = spaceToPixel(up)
-            self.white.space = up
-        elif keycode[1] == 'down'and (down in boardFunctions.boardDict[position]):
-            self.white.center = spaceToPixel(down)
-            self.white.space = down
-        elif keycode[1] == 'w':
+        if keycode[1] == 'w':
             quit(ClueApp())
+        else:
+            self.player.move(keycode)
         return True
 
-    def placePiece(self, space):
-        self.white.space = space
+    def placePiece(self, player, space):
+        self.player = player
+        player.space = space
         place = spaceToPixel(space)
-        self.white.center = (place[0] - 10.5, place[1] - 11.25)
-        print(self.white.center)
+        player.center = (place[0] - 10.5, place[1] - 11.25)
+        print(player.center)
+
 
 def spaceToPixel(space):
     """
@@ -79,17 +78,16 @@ def spaceToPixel(space):
     return (x_pixel, y_pixel)
 
 
-class CluePiece(Widget):
-    def move(self):
-        pass
+
 
 class ClueBoard(Widget):
     pass
 
 class ClueApp(App):
     def build(self):
+        white = CluePiece()
         game = ClueGame()
-        game.placePiece((14,1))
+        game.placePiece(white, (14,1))
         return game
 
 
@@ -99,4 +97,4 @@ if __name__ == '__main__':
     Config.set('graphics', 'height', '850')
     Config.set('graphics', 'resizable', 0)
     Config.write()
-    ClueApp().run() 
+    ClueApp().run()
