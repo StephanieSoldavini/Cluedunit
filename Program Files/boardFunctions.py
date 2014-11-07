@@ -26,8 +26,8 @@ def fillBoard():
 
     board = createBoard(24, 25)
 
-    #doorSpaces = openFile("doorSpaces")
-    #addToBoard(doorSpaces, board)
+    #rooms = openFile("rooms")
+    #addToBoard(rooms, board)
 
     homeSpaces = openFile("homeSpaces")
     addToBoard(homeSpaces, board)
@@ -56,6 +56,9 @@ def createGrid(board):
         for y in range(len(board[x])):
             if board[x][y] == "hallway":
                 boardDict[(x, y)] = []
+            elif "Home" in board[x][y]:   
+                boardDict[(x, y)] = []
+
 
     # ask all of the hallways if they have neighbors and add
     # references to those neighbors
@@ -68,7 +71,7 @@ def createGrid(board):
 
     # process the rooms and create keys for them and add
     # references to hallways
-    roomList = openFile("doorSpaces")
+    roomList = openFile("rooms")
     for r in roomList:
         doors = [tuple(int(f1) for f1 in f) for f in \
                  [a.strip("() ").split(",") for a in r[1:]]]
