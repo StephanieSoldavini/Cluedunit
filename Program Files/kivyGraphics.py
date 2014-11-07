@@ -14,6 +14,10 @@ from kivy.core.window import Window
 import boardFunctions
 
 class CluePiece(Widget):
+    white = ObjectProperty(None)
+    def __init__(self, **kwargs):
+        """This might do something"""
+        super(CluePiece, self).__init__(**kwargs)
 
     def move(self, keycode):
         position = self.space
@@ -35,7 +39,14 @@ class CluePiece(Widget):
         elif keycode[1] == 'down'and (down in boardFunctions.boardDict[position]):
             self.center = spaceToPixel(down)
             self.space = down
-        print(self.space)
+        print(self.pos)
+
+
+    def placePiece(self, space):
+        self.space = space
+        place = spaceToPixel(space)
+        self.center = (place[0] - 10.5, place[1] - 11.25)
+        print(self.center)
 
 class ClueGame(Widget):
 
@@ -60,7 +71,7 @@ class ClueGame(Widget):
         self.player = player
         player.space = space
         place = spaceToPixel(space)
-        player.center = (place[0] - 10.5, place[1] - 11.25)
+        self.player.center = (place[0] - 10.5, place[1] - 11.25)
         print(player.center)
 
 
@@ -75,7 +86,7 @@ def spaceToPixel(space):
     spaceH = windowSize[1]*(1/27)
     x_pixel = ((space[0] + 1.5) * spaceW) 
     y_pixel = ((space[1] + 1.5) * spaceH)
-    return (x_pixel, y_pixel)
+    return x_pixel, y_pixel
 
 
 
@@ -87,7 +98,10 @@ class ClueApp(App):
     def build(self):
         white = CluePiece()
         game = ClueGame()
-        game.placePiece(white, (14,1))
+        white.placePiece((14,1))
+        print("center", white.center)
+        print("pos", white.pos)
+        print("size", white.size)
         return game
 
 
