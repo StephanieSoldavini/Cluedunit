@@ -5,8 +5,8 @@
 #        Color: 
 #            rgb:
 #                (0, 0, 0)
-        Ellipse:
-            source: 'images/white.png'
+        Rectangle:
+            source: 'images/scarletpawn.png'
             pos: self.pos
             size: self.size
 #        Color: 
@@ -14,7 +14,7 @@
 #                (1, 1, 1)
 #        Ellipse:
 #            pos: self.pos
-#            size: (self.size[0] * .9, self.size[1] * .9)         
+#            size: (self.size[0] * .9, self.size[1])         
 
 
 <ClueBoard>:
@@ -37,9 +37,8 @@
         size: root.size
         pos: root.pos
 
-
     CluePiece:
         id: white
         #pos: 582.25, 21.75
-        size: (root.width*(.03), root.height*(.03))
+        size: (root.width*(.032), root.height*(.03))
         #center: root.center
