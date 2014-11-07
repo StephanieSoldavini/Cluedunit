@@ -57,12 +57,13 @@ class ClueGame(Widget):
             self.white.space = down
         elif keycode[1] == 'w':
             quit(ClueApp())
+        print(self.white.center)    
         return True
 
     def placePiece(self, space):
         self.white.space = space
         place = spaceToPixel(space)
-        self.white.center = (place[0] - 10.5, place[1] - 11.25)
+        self.white.center = (place[0] - 10.5, place[1] - 13.125)
         print(self.white.center)
 
 def spaceToPixel(space):
