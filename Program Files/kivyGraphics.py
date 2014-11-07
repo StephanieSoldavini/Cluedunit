@@ -14,7 +14,8 @@ from kivy.core.window import Window
 import boardFunctions
 
 class CluePiece(Widget):
-    white = ObjectProperty(None)
+    #white = ObjectProperty(None)
+
     def __init__(self, **kwargs):
         """This might do something"""
         super(CluePiece, self).__init__(**kwargs)
@@ -41,7 +42,6 @@ class CluePiece(Widget):
             self.space = down
         print(self.pos)
 
-
     def placePiece(self, space):
         self.space = space
         place = spaceToPixel(space)
@@ -49,12 +49,11 @@ class CluePiece(Widget):
         print(self.center)
 
 class ClueGame(Widget):
-
+    white = ObjectProperty(None)
     def __init__(self, **kwargs):
         super(ClueGame, self).__init__(**kwargs)
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
-
 
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)
@@ -64,20 +63,13 @@ class ClueGame(Widget):
         if keycode[1] == 'w':
             quit(ClueApp())
         else:
-            self.player.move(keycode)
+            self.white.move(keycode) # will be player.move eventually
         return True
-
-    def placePiece(self, player, space):
-        self.player = player
-        player.space = space
-        place = spaceToPixel(space)
-        self.player.center = (place[0] - 10.5, place[1] - 11.25)
-        print(player.center)
-
 
 def spaceToPixel(space):
     """
-    converts a board space (when the 0,0 space is by conservatory) to a pixel (when 0,0 is the same corner)
+    converts a board space (when the 0,0 space is by conservatory) 
+        to a pixel (when 0,0 is the same corner)
     :param space: tuple with x first
     :return: tuple with x first
     """
@@ -88,22 +80,18 @@ def spaceToPixel(space):
     y_pixel = ((space[1] + 1.5) * spaceH)
     return x_pixel, y_pixel
 
-
-
-
 class ClueBoard(Widget):
     pass
 
 class ClueApp(App):
     def build(self):
-        white = CluePiece()
+        #white = CluePiece()
         game = ClueGame()
-        white.placePiece((14,1))
-        print("center", white.center)
-        print("pos", white.pos)
-        print("size", white.size)
+        game.white.placePiece((14,1))
+        print("center", game.white.center)
+        print("pos", game.white.pos)
+        print("size", game.white.size)
         return game
-
 
 if __name__ == '__main__':
     Config.set('graphics', 'fullscreen', '0')
