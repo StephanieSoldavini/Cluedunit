@@ -2,7 +2,9 @@
  * Created by Stephanie on 2/16/15.
  */
 public class Weapon extends Card {
-    public Weapon(String name) {
+    private Room location;
+    public Weapon(String name, Room location) {
         super(name);
+        this.location = location;
     }
 }
