@@ -23,7 +23,7 @@ public class Player {
         boolean inNewRoom = false;
 
         while (spaces > 0 && inNewRoom == false) {
-            if (rooms.contains(location)) { //make rooms list
+            if (rooms.contains(location)) { //TODO make rooms list
                 /**
                  * You are in a room
                  * Pick a door closest to destination
