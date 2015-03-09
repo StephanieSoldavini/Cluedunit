@@ -1,22 +1,45 @@
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
- * Created by Stephanie on 2/27/15.
+ * Convenience class for programmers who don't know file
+ * input/output in Java. ... yet
  */
 public class FileReader {
-    Scanner s = new Scanner(Paths.get("hallways.txt"));
-    List<Integer> integers = new ArrayList<>();
-
-    while (s.next()) {
-        if (s.hasNextInt()) {
-            integers.add(s.nextInt());
-        } else {
-            s.next();
+    /**
+     * Produce a Scanner instance connected to the given file.
+     * If the file cannot be opened, this method will report
+     * it on standard error, and then terminate the program
+     * with a status of 1.
+     * @param fileName the name of the file to be scanned
+     * @return a Scanner instance on the file. (Please close it when done!)
+     */
+    public static Scanner openFile( String fileName ) {
+        Scanner result = null;
+        try {
+            InputStream istream = new FileInputStream( fileName );
+            result = new Scanner( istream );
         }
+        catch ( FileNotFoundException fnfe ) {
+            System.err.println( fnfe );
+            System.err.println( "File \"" + fileName + "\" does not exist." );
+            System.exit( 1 );
+        }
+        return result;
     }
 
+    public static ArrayList<ArrayList<String>> parseFileAsList( String fileName ) {
+        ArrayList<ArrayList<String>> lst = new ArrayList<>();
+        Scanner scan = openFile(fileName);
+        while (scan.hasNextLine()) {
+            String line = scan.nextLine();
+            ArrayList<String> lineList = new ArrayList<>(Arrays.asList(line.split(";")));
+            lst.add(lineList);
+        }
+        return lst;
+    }
 }

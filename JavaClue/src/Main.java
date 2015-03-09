@@ -1,7 +1,8 @@
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println(0);
+        Card.createAllCards();
+        System.out.println(new Board(24, 25, Room.rooms));
     }
 }
 
