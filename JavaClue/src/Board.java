@@ -34,7 +34,7 @@ public class Board {
             int y = Integer.parseInt(places.get(1).trim());
             boardDict.put(new Loc(x, y, places.get(2).trim(), null), new ArrayList<>());
         }
-
+        //add hallways
         ArrayList<ArrayList<String>> hallways = FileReader.parseFileAsList("data/hallways.txt"); //open file hallways
         for (int x = 0; x < hallways.size(); x++) {
             for (String square : hallways.get(x)) {
@@ -44,7 +44,7 @@ public class Board {
                 }
             }
         }
-
+        //add other hallways as references to hallways
         for (Loc node : boardDict.keySet()) {
             List<Loc> locList = Arrays.asList(new Loc(node.x, node.y + 1, "hallway", null),
                     new Loc(node.x, node.y - 1, "hallway", null),
@@ -59,18 +59,18 @@ public class Board {
                 }
             }
         }
-
+        //add rooms
         ArrayList<ArrayList<String>> roomList = FileReader.parseFileAsList("data/rooms.txt");
-        for (ArrayList<String> r : roomList){
+        for (ArrayList<String> r : roomList) {
             Room myRoom = null;
             for (Room room : Room.rooms) {
                 if (room.name.equals(r.get(0).trim())) {
                     myRoom = room; //gotcha!
                 }
             }
-            Loc thisRoom = new Loc(0,0,r.get(0).trim(),myRoom);
+            Loc thisRoom = new Loc(0, 0, r.get(0).trim(), myRoom);
             boardDict.put(thisRoom, new ArrayList<>());
-            for (String coords : r.subList(1,r.size())){
+            for (String coords : r.subList(1, r.size())) {
                 coords = coords.replaceAll("[() ]", "");
                 ArrayList<String> coordList = new ArrayList<>(Arrays.asList(coords.split(",")));
                 int x = Integer.parseInt(coordList.get(0));
@@ -78,26 +78,39 @@ public class Board {
                 boardDict.get(thisRoom).add(new Loc(x, y, "hallway", null));
             }
         }
-        for (Room room : Room.rooms){
-            Loc tempRoom = new Loc(0,0,room.name,room);
-            for (Loc hallway : boardDict.get(tempRoom)){
+        //add hallway references to rooms
+        for (Room room : Room.rooms) {
+            Loc tempRoom = new Loc(0, 0, room.name, room);
+            for (Loc hallway : boardDict.get(tempRoom)) {
                 boardDict.get(hallway).add(tempRoom);
             }
         }
-        Loc study        = new Loc(0,0,"Study",new Room("Study"));
-        Loc kitchen      = new Loc(0,0,"Kitchen",new Room("Kitchen"));
-        Loc conservatory = new Loc(0,0,"Conservatory",new Room("Conservatory"));
-        Loc lounge       = new Loc(0,0,"Lounge",new Room("Lounge"));
-
-
-
-
-
+        //add passage references
+        ArrayList<ArrayList<String>> passages = FileReader.parseFileAsList("data/passages.txt");
+        for (ArrayList<String> line : passages){
+            System.out.println(line);
+            String fromRoomName = line.get(0).trim();
+            String toRoomName = line.get(1).trim();
+            Room fromRoom = null;
+            Room toRoom = null;
+            for (Room room : Room.rooms) {
+                if (room.name.equals(fromRoomName)) {
+                    fromRoom = room; //gotcha!
+                } else if (room.name.equals(toRoomName)) {
+                    toRoom = room; //gotcha!
+                }
+            }
+            Loc fromLoc = new Loc(0, 0, fromRoomName, fromRoom);
+            Loc toLoc = new Loc(0, 0, toRoomName, toRoom);
+            System.out.println("fromLoc " + fromLoc);
+            System.out.println("toLoc " + toLoc);
+            boardDict.get(fromLoc).add(toLoc);
+        }
     }
 
 
     @Override
-    public String toString(){
+    public String toString() {
         String string = new String();
         for (Loc loc : boardDict.keySet()) {
             string = string + "\n" + (loc) + " connects to " + boardDict.get(loc);
@@ -105,4 +118,25 @@ public class Board {
         return string;
     }
 
+
+    public ArrayList<Loc> bfs(Loc start, Loc end) {
+        ArrayList<ArrayList<Loc>> queue = new ArrayList<>();
+        queue.add(new ArrayList<>(Arrays.asList(start)));
+        ArrayList<Loc> path = new ArrayList<>();
+        while (!queue.isEmpty()){
+            path = queue.remove(0);
+            Loc node = path.get(path.size());
+            if (node.equals(end)){
+                return path;
+            }
+            for (Loc adjacent : boardDict.get(node)){
+                if (!path.contains(adjacent)){
+                    ArrayList<Loc> newPath = path;
+                    newPath.add(adjacent);
+                    queue.add(newPath);
+                }
+            }
+        }
+        return null;
+    }
 }

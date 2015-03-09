@@ -12,4 +12,10 @@ public class Weapon extends Card {
         this.location = location;
         Weapon.weapons.add(this);
     }
+
+    @Override
+    public String toString() {
+        return "The " + this.name;
+    }
 }
+
