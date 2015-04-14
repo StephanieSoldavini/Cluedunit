@@ -1,0 +1,4 @@
+Study; Kitchen
+Kitchen; Study
+Conservatory; Lounge
+Lounge; Conservatory

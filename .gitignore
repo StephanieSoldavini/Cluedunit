@@ -1,10 +1,9 @@
 Program Files/__pycache__
 Program Files\__pycache__\
-.idea\*
+Program Files\.idea\*
 *.pyc
-<<<<<<< HEAD
-.idea/workspace.xml
 *.xml
-=======
-.idea\workspace.xml
->>>>>>> FETCH_HEAD
+JavaClue/out/
+*.class
+JavaClue/.idea/
+.idea/
