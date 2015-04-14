@@ -87,7 +87,7 @@ class ClueApp(App):
     def build(self):
         #white = CluePiece()
         game = ClueGame()
-        game.white.placePiece((14,1))
+        game.white.placePiece((14,0))
         print("center", game.white.center)
         print("pos", game.white.pos)
         print("size", game.white.size)
