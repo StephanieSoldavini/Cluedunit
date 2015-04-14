@@ -88,7 +88,6 @@ public class Board {
         //add passage references
         ArrayList<ArrayList<String>> passages = FileReader.parseFileAsList("data/passages.txt");
         for (ArrayList<String> line : passages){
-            System.out.println(line);
             String fromRoomName = line.get(0).trim();
             String toRoomName = line.get(1).trim();
             Room fromRoom = null;
@@ -102,27 +101,23 @@ public class Board {
             }
             Loc fromLoc = new Loc(0, 0, fromRoomName, fromRoom);
             Loc toLoc = new Loc(0, 0, toRoomName, toRoom);
-            System.out.println("fromLoc " + fromLoc);
-            System.out.println("toLoc " + toLoc);
             boardDict.get(fromLoc).add(toLoc);
         }
     }
 
-
     @Override
     public String toString() {
-        String string = new String();
+        String string = "";
         for (Loc loc : boardDict.keySet()) {
             string = string + "\n" + (loc) + " connects to " + boardDict.get(loc);
         }
         return string;
     }
 
-
     public ArrayList<Loc> bfs(Loc start, Loc end) {
         ArrayList<ArrayList<Loc>> queue = new ArrayList<>();
         queue.add(new ArrayList<>(Arrays.asList(start)));
-        ArrayList<Loc> path = new ArrayList<>();
+        ArrayList<Loc> path;
         while (!queue.isEmpty()){
             path = queue.remove(0);
             Loc node = path.get(path.size());
