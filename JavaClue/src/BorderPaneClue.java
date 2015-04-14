@@ -81,6 +81,8 @@ public class BorderPaneClue extends Application {
         //Center content
         Label centerLabel = new Label("This is where the board will go");
         ImageView board = new ImageView(BOARD);
+        board.setFitHeight(400);
+        board.setPreserveRatio(true);
 
         //Using AnchorPane only to position items in the center
 //        AnchorPane centerAP = new AnchorPane();
@@ -89,7 +91,7 @@ public class BorderPaneClue extends Application {
 //        //AnchorPane.setTopAnchor(imageView, Double.valueOf(40));
 //        //AnchorPane.setLeftAnchor(imageView, Double.valueOf(30));
 //        centerAP.getChildren().addAll(centerLabel);
-        HBox centerBox = new HBox();
+        VBox centerBox = new VBox();
         centerBox.getChildren().addAll(centerLabel, board);
         borderPane.setCenter(centerBox);
 
