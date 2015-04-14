@@ -28,7 +28,7 @@ import javafx.scene.shape.Rectangle;
  * @related graphics/images/ImageCreationSample
  */
 public class BorderPaneClue extends Application {
-    private final Image BOARD = new Image(getClass().getResourceAsStream("/Image/mustard.png"));
+    private final Image BOARD = new Image(getClass().getResourceAsStream("/Image/ScanBoardSmall.jpg"));
     private void init(Stage primaryStage) {
         Group root = new Group();
         primaryStage.setResizable(true);
