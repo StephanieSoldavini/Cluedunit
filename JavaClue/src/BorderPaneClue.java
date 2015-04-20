@@ -1,7 +1,4 @@
-/**
- * Copyright (c) 2008, 2012 Oracle and/or its affiliates.
- * All rights reserved. Use is subject to license terms.
- */
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -19,13 +16,9 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+
 /**
- * An example of  a BorderPane layout, with placement of children in the top,
- * left, center, right, and bottom positions.
- *
- * @see javafx.scene.layout.BorderPane
- * @related controls/text/SimpleLabel
- * @related graphics/images/ImageCreationSample
+ * Main GUI class written with javafx
  */
 public class BorderPaneClue extends Application {
     private final Image BOARD = new Image(getClass().getResourceAsStream("/Image/ScanBoardSmall.jpg"));

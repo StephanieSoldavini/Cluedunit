@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * Board class that stores the connections between squares and rooms.
+ * It can provide the shortest route between locations
  * Created by Stephanie on 2/20/15.
  */
 public class Board {
@@ -16,6 +18,11 @@ public class Board {
     HashMap<Loc, ArrayList<Loc>> boardDict = new HashMap<>();
 
 
+    /**
+     * @param width  number of spaces the board is wide
+     * @param height number of spaces the board is tall
+     * @param rooms A list of room objects that the board will have
+     */
     public Board(int width, int height, ArrayList<Room> rooms) {
         this.width = width;
         this.height = height;
@@ -105,6 +112,9 @@ public class Board {
         }
     }
 
+    /**
+     * @return a string that tells (for every possible location) it's connecting squares
+     */
     @Override
     public String toString() {
         String string = "";
@@ -114,6 +124,14 @@ public class Board {
         return string;
     }
 
+    /**
+     * Performs a breadth first search to determine the best way to get from one location to another
+     * To be used for players determining the fastest route between rooms
+     * @param start where are you (the player) right now
+     * @param end where do you want to go?
+     * @return what the shortest (legal) path is (null is returned if no path is found)
+     *
+     */
     public ArrayList<Loc> bfs(Loc start, Loc end) {
         ArrayList<ArrayList<Loc>> queue = new ArrayList<>();
         queue.add(new ArrayList<>(Arrays.asList(start)));
