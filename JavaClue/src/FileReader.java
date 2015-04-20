@@ -32,6 +32,12 @@ public class FileReader {
         return result;
     }
 
+    /**
+     * Each item in the file separated by a semicolon becomes an entry in a list.
+     * This list encompasses all items in the same row, and is added to a list that contains other lists of rows
+     * @param fileName name of file with location
+     * @return lists inside of lists
+     */
     public static ArrayList<ArrayList<String>> parseFileAsList( String fileName ) {
         ArrayList<ArrayList<String>> lst = new ArrayList<>();
         Scanner scan = openFile(fileName);

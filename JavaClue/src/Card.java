@@ -2,6 +2,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
+ * Used to describe a card. Knows who has seen it, and who holds it
  * Created by Stephanie on 2/16/15.
  */
 public class Card {
@@ -33,6 +34,10 @@ public class Card {
         return name.hashCode();
     }
 
+    /**
+     * Calls constructors for child classes based on cards.txt
+     * Child constructors create static arraylists in respective classes
+     */
     public static void createAllCards(){
         ArrayList<ArrayList<String>> cards = FileReader.parseFileAsList("data/cards.txt");
         for (ArrayList<String> card : cards){

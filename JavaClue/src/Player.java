@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
+ *
  * Created by Stephanie on 2/16/15.
  */
 public class Player {
@@ -16,6 +17,16 @@ public class Player {
     private Loc location;
     public static ArrayList<Player> players = new ArrayList<>();
 
+    /**
+     * Who am I really?
+     * Used for both human and AI
+     * @param name What will you be called
+     * @param character which character are you playing as
+     * @param human are you human
+     * @param order umm something maybe?
+     * @param location where am I?
+     * @param cards what cards do I possess
+     */
     public Player (String name, Char character, boolean human, int order, Loc location, ArrayList<Card> cards) {
         this.name = name;
         this.character = character;
@@ -26,6 +37,10 @@ public class Player {
         Player.players.add(this);
     }
 
+    /**
+     * Adds a card to a players hand
+     * @param card Card to add
+     */
     public void addCard(Card card){
         this.cards.add(card);
     }
@@ -37,6 +52,10 @@ public class Player {
         } else {return this.name + " as " + this.character.name;}
     }
 
+    /**
+     * @param spaces how far the player is allowed to move (what did they roll
+     * @param destination where will they end up
+     */
     public void move(int spaces, Room destination) {
         boolean inNewRoom = false;
 
@@ -51,6 +70,10 @@ public class Player {
         }
     }
 
+    /**
+     * @param numChar how many characters (human + comp)
+     * @param numComp how many of those are computers
+     */
     public static void createPlayers(int numChar, int numComp) {
         Scanner scan = new Scanner(System.in);
         ArrayList<Char> tempChars = new ArrayList<>(Char.characters);
