@@ -6,10 +6,13 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBuilder;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -18,6 +21,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * An example of  a BorderPane layout, with placement of children in the top,
@@ -29,10 +36,18 @@ import javafx.scene.shape.Rectangle;
  */
 public class BorderPaneClue extends Application {
     private final Image BOARD = new Image(getClass().getResourceAsStream("/Image/ScanBoardSmall.jpg"));
+    private final Image LOGO = new Image(getClass().getResourceAsStream("/Image/Clue.png"));
+    private int boardWidth = 1200;
+    private int boardHeight = 800;
+    private int buttonHeight = 50;
     private void init(Stage primaryStage) {
         Group root = new Group();
         primaryStage.setResizable(true);
-        primaryStage.setScene(new Scene(root, 800, 800));
+        primaryStage.setScene(new Scene(root, boardWidth, boardHeight));
+
+        primaryStage.setTitle("Clue");
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("Image/Pieces/scarletpawn.png")));
+
         BorderPane borderPane = new BorderPane();
 
 //        //Top content
@@ -50,39 +65,74 @@ public class BorderPaneClue extends Application {
 //        borderPane.setLeft(leftVbox);
 
         //Right content
-        Label rightlabel1 = new Label("This is where the CLUE logo should go");
+        //Label rightlabel1 = new Label("This is where the CLUE logo should go");
+        ImageView logoImage = new ImageView(LOGO);
+        logoImage.setFitWidth(primaryStage.getScene().getWidth() * (.25));
+        logoImage.setPreserveRatio(true);
 
         Button move = new Button("Move");
         Button suggest = new Button("Suggest");
+
+        ImageView gearImage = new ImageView(new Image(getClass().getResourceAsStream("/Image/gear3.png")));
+        System.out.println();
+
+        Button settings = new Button("",gearImage);
         HBox actions = new HBox();
+        move.setPrefSize(100, buttonHeight);
+        suggest.setPrefSize(100, buttonHeight);
+        settings.setPrefSize(buttonHeight, buttonHeight);
+        System.out.println(suggest.getPrefHeight());
+        gearImage.setFitHeight(suggest.getPrefHeight() * .5);
+        gearImage.setPreserveRatio(true);
+        gearImage.setSmooth(true);
         actions.setSpacing(10);
         actions.setPadding(new Insets(10, 20, 10, 20));
-        actions.getChildren().addAll(move, suggest);
+        actions.getChildren().addAll(move, suggest, settings);
 
 
-        Label rightlabel2 = new Label("This is where the event tracker will go");
+        //Label rightlabel2 = new Label("This is where the event tracker will go");
 
         final ListView<String> listView = new ListView<String>();
         listView.setItems(FXCollections.observableArrayList(
-                "Row 1", "Row 2", "Long Row 3", "Row 4", "Row 5", "Row 6",
-                "Row 7", "Row 8", "Row 9", "Row 10", "Row 11", "Row 12", "Row 13",
-                "Row 14", "Row 15", "Row 16", "Row 17", "Row 18", "Row 19", "Row 20"
+                "this", "is", "where", "the", "event", "tracker", "will", "go",
+                "PlayerX suspects ___ with ___ in the ___. PlayerZ showed them a card",
+                "PlayerY took the secret passage to ___."
         ));
-        //listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        ArrayList<String> events = new ArrayList<>(Arrays.asList("this", "is", "where", "the", "event", "tracker", "will", "go",
+                "PlayerX suspects ___ with ___ in the ___. PlayerZ showed them a card",
+                "PlayerY took the secret passage to ___."));
 
+        Collection<Text> wrapEvents = new ArrayList<>();
+        events.forEach((event) -> wrapEvents.add(TextBuilder.create().text(event).wrappingWidth(200).build()));
+
+        listView.getItems().addAll(wrapEvents);
+        //listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        //listView.setFixedCellSize((double) 200);
+        listView.setPrefWidth(primaryStage.getScene().getWidth() * (.25));
 
         Label rightlabel3 = new Label("blah");
         VBox rightVbox = new VBox();
 
         //rightVbox.setAlignment(Pos.BASELINE_RIGHT);
-        rightVbox.getChildren().addAll(rightlabel1, actions, rightlabel2, listView, rightlabel3);
+        rightVbox.getChildren().addAll(logoImage, actions, listView, rightlabel3);
         borderPane.setRight(rightVbox);
 
         //Center content
-        Label centerLabel = new Label("This is where the board will go");
+        //Label centerLabel = new Label("This is where the board will go");
         ImageView board = new ImageView(BOARD);
-        board.setFitHeight(400);
+        board.setFitHeight(primaryStage.getScene().getHeight() * (.75));
         board.setPreserveRatio(true);
+
+        TabPane tabPane = new TabPane();
+        tabPane.setSide(Side.TOP);
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+
+        final Tab boardTab = new Tab();
+        boardTab.setText("Board");
+        boardTab.setContent(board);
+        final Tab notesTab = new Tab();
+        notesTab.setText("Notes");
+        tabPane.getTabs().addAll(boardTab, notesTab);
 
         //Using AnchorPane only to position items in the center
 //        AnchorPane centerAP = new AnchorPane();
@@ -92,7 +142,7 @@ public class BorderPaneClue extends Application {
 //        //AnchorPane.setLeftAnchor(imageView, Double.valueOf(30));
 //        centerAP.getChildren().addAll(centerLabel);
         VBox centerBox = new VBox();
-        centerBox.getChildren().addAll(centerLabel, board);
+        centerBox.getChildren().addAll(tabPane);
         borderPane.setCenter(centerBox);
 
         //Bottom content
@@ -103,9 +153,9 @@ public class BorderPaneClue extends Application {
         root.getChildren().add(borderPane);
     }
 
-    public double getSampleWidth() { return 400; }
+    public double getSampleWidth() { return boardWidth; }
 
-    public double getSampleHeight() { return 400; }
+    public double getSampleHeight() { return boardHeight; }
 
     @Override public void start(Stage primaryStage) throws Exception {
         init(primaryStage);
