@@ -124,7 +124,7 @@ Heap:
  Metaspace       used 6405K, capacity 6758K, committed 7040K, reserved 1056768K
   class space    used 719K, capacity 792K, committed 896K, reserved 1048576K
 
-Card table byte_map: [0x000000011b648000,0x000000011ba49000] byte_map_base: 0x0000000117c48000
+engine.Card table byte_map: [0x000000011b648000,0x000000011ba49000] byte_map_base: 0x0000000117c48000
 
 Marking Bits: (ParMarkBitMap*) 0x000000010bab1410
  Begin Bits: [0x000000011c100000, 0x000000011e100000)

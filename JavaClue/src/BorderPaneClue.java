@@ -21,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import sun.plugin.javascript.navig.Anchor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,6 +68,7 @@ public class BorderPaneClue extends Application {
         //Right content
         //Label rightlabel1 = new Label("This is where the CLUE logo should go");
         ImageView logoImage = new ImageView(LOGO);
+
         logoImage.setFitWidth(primaryStage.getScene().getWidth() * (.25));
         logoImage.setPreserveRatio(true);
 
@@ -98,49 +100,44 @@ public class BorderPaneClue extends Application {
                 "PlayerX suspects ___ with ___ in the ___. PlayerZ showed them a card",
                 "PlayerY took the secret passage to ___."
         ));
-        ArrayList<String> events = new ArrayList<>(Arrays.asList("this", "is", "where", "the", "event", "tracker", "will", "go",
-                "PlayerX suspects ___ with ___ in the ___. PlayerZ showed them a card",
-                "PlayerY took the secret passage to ___."));
+        //ArrayList<String> events = new ArrayList<>(Arrays.asList("this", "is", "where", "the", "event", "tracker", "will", "go",
+        //        "PlayerX suspects ___ with ___ in the ___. PlayerZ showed them a card",
+        //        "PlayerY took the secret passage to ___."));
 
-        Collection<Text> wrapEvents = new ArrayList<>();
-        events.forEach((event) -> wrapEvents.add(TextBuilder.create().text(event).wrappingWidth(200).build()));
+        //Collection<Text> wrapEvents = new ArrayList<>();
+        //events.forEach((event) -> wrapEvents.add(TextBuilder.create().text(event).wrappingWidth(200).build()));
 
-        listView.getItems().addAll(wrapEvents);
+        //listView.getItems().addAll(wrapEvents);
         //listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         //listView.setFixedCellSize((double) 200);
-        listView.setPrefWidth(primaryStage.getScene().getWidth() * (.25));
+        listView.setMaxWidth(primaryStage.getScene().getWidth() * (.25));
+        listView.setMinWidth(primaryStage.getScene().getWidth() * (.25));
 
-        Label rightlabel3 = new Label("blah");
         VBox rightVbox = new VBox();
 
-        //rightVbox.setAlignment(Pos.BASELINE_RIGHT);
-        rightVbox.getChildren().addAll(logoImage, actions, listView, rightlabel3);
+        rightVbox.getChildren().addAll(logoImage, actions, listView);
         borderPane.setRight(rightVbox);
 
         //Center content
-        //Label centerLabel = new Label("This is where the board will go");
+
+        AnchorPane boardBox = new AnchorPane();
         ImageView board = new ImageView(BOARD);
         board.setFitHeight(primaryStage.getScene().getHeight() * (.75));
         board.setPreserveRatio(true);
+        boardBox.getChildren().add(board);
 
         TabPane tabPane = new TabPane();
         tabPane.setSide(Side.TOP);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         final Tab boardTab = new Tab();
-        boardTab.setText("Board");
-        boardTab.setContent(board);
+        boardTab.setText("engine.Board");
+        boardTab.setContent(boardBox);
         final Tab notesTab = new Tab();
         notesTab.setText("Notes");
+        notesTab.setContent(new Label("Notey note notes"));
         tabPane.getTabs().addAll(boardTab, notesTab);
 
-        //Using AnchorPane only to position items in the center
-//        AnchorPane centerAP = new AnchorPane();
-//        AnchorPane.setTopAnchor(centerLabel, (double) 5);
-//        AnchorPane.setLeftAnchor(centerLabel, (double) 20);
-//        //AnchorPane.setTopAnchor(imageView, Double.valueOf(40));
-//        //AnchorPane.setLeftAnchor(imageView, Double.valueOf(30));
-//        centerAP.getChildren().addAll(centerLabel);
         VBox centerBox = new VBox();
         centerBox.getChildren().addAll(tabPane);
         borderPane.setCenter(centerBox);

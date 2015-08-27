@@ -1,6 +1,0 @@
- 9;  0; Green Home
-14;  0; White Home
- 0;  6; Peacock Home
- 0; 19; Plum Home
-16; 24; Scarlet Home
-23; 17; Mustard Home
