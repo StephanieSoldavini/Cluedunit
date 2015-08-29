@@ -6,8 +6,8 @@ package engine;
 public class Loc {
     Room room;
     String name;
-    int x;
-    int y;
+    int x; //col
+    int y; //row
 
     public int getX() {
         return x;
@@ -51,7 +51,7 @@ public class Loc {
     public String toString() {
         String printname = "";
         if (room!= null) printname = room.toString();
-        else printname = name + " at (" + x + ", " + y + ")";
+        else printname = name + " at (" + y + ", " + x + ")";
         return "engine.Loc{" + printname + "}";
     }
 }

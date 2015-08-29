@@ -39,7 +39,7 @@ public class Card {
         for (ArrayList<String> card : cards){
             if (card.get(0).equals("C")){
                 String[] coords = card.get(4).trim().replaceAll("[()]", "").split(",");
-                new Char(card.get(1).trim(), card.get(2).trim(), card.get(3).trim().toLowerCase(), Integer.parseInt(coords[0].trim()), Integer.parseInt(coords[1].trim()));
+                new Char(card.get(1).trim(), card.get(2).trim(), card.get(3).trim().toLowerCase(), Integer.parseInt(coords[1].trim()), Integer.parseInt(coords[0].trim()));
                 //todo (done?) add homespace location here
             } else if (card.get(0).equals("W")) {
                 new Weapon(card.get(1).trim(), null);

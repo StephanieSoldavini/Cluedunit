@@ -99,7 +99,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("\33[0m");
         Card.createAllCards();
-        new Board(24, 25, Room.rooms);
+        Board myBoard = new Board(24, 25, Room.rooms);
         System.out.println("Characters: " + Char.characters);
         System.out.println("Weapons:    " + Weapon.weapons);
         System.out.println("Rooms:      " + Room.rooms);
@@ -125,13 +125,17 @@ public class Main {
 
         //put all characters visually on board
         for (Char chr: Char.characters){
-            System.out.println(writeCharAtRowCol(chr.getHome().getY(), chr.getHome().getX(), chr));
+            System.out.println(writeCharAtRowCol(chr.getHome().getX(), chr.getHome().getY(), chr));
         }
 
         scan.nextLine();
 
         System.out.println(blankTwoSpaces(0, 6) + writeCharAtRowCol(1, 6, Char.getCharByAbbr("PE")));
         scan.nextLine();
+
+        System.out.println("\33[0m");
+
+        System.out.println(myBoard);
 
 
 //        System.out.println("\33[25A\33[2K\33[1B\33[2K" + "This is so cool" + "\33[1B\33[2K");
@@ -142,7 +146,7 @@ public class Main {
 //            System.out.println(line);
 //        }
 
-        //System.out.println("\33[2 30H\33[42m" + "        " );
+
 
     }
 }

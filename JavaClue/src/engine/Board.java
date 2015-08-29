@@ -29,17 +29,16 @@ public class Board {
         }
         //add homespaces to board
         for (Char chr: Char.characters){
-            Loc home = chr.getHome();
-            boardDict.put(home, new ArrayList<>());
+            boardDict.put(chr.getHome(), new ArrayList<>());
         }
 
 
-        ArrayList<ArrayList<String>> homeSpaces = FileReader.parseFileAsListofLists("data/homeSpaces.txt"); //open file homespaces
-        for (ArrayList<String> places : homeSpaces) {
-            int x = Integer.parseInt(places.get(0).trim());
-            int y = Integer.parseInt(places.get(1).trim());
-            boardDict.put(new Loc(x, y, places.get(2).trim(), null), new ArrayList<>());
-        }
+//        ArrayList<ArrayList<String>> homeSpaces = FileReader.parseFileAsListofLists("data/homeSpaces.txt"); //open file homespaces
+//        for (ArrayList<String> places : homeSpaces) {
+//            int x = Integer.parseInt(places.get(0).trim());
+//            int y = Integer.parseInt(places.get(1).trim());
+//            boardDict.put(new Loc(x, y, places.get(2).trim(), null), new ArrayList<>());
+//        }
         //add hallways
         ArrayList<ArrayList<String>> hallways = FileReader.parseFileAsListofLists("data/hallways.txt"); //open file hallways
         for (int x = 0; x < hallways.size(); x++) {
@@ -127,7 +126,7 @@ public class Board {
     @Override
     public String toString() {
         String string = "";
-        for (Loc loc : boardDict.keySet()) {
+        for (Object loc : boardDict.keySet().stream().filter(p -> p.name.contains("Home")).toArray()) {
             string = string + "\n" + (loc) + " connects to " + boardDict.get(loc);
         }
         return string;
