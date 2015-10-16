@@ -15,13 +15,18 @@ public class Board {
     ArrayList<ArrayList<Loc>> board = new ArrayList<>();
     HashMap<Loc, ArrayList<Loc>> boardDict = new HashMap<>();
 
-
+    /**
+     * Create a Clue board
+     * @param width the width of the board
+     * @param height the height of the board
+     * @param rooms the list of rooms
+     */
     public Board(int width, int height, ArrayList<Room> rooms) {
         this.width = width;
         this.height = height;
         this.rooms = rooms;
         //create empty nested list board
-        for (int x = 0; x < this.width; x++) {
+        for (int x = 0; x < this.width; x++) { //TODO XY Row Col
             board.add(new ArrayList<>());
             for (int y = 0; y < this.height; y++) {
                 board.get(x).add(null);
@@ -51,7 +56,7 @@ public class Board {
         }
         //add other hallways as references to hallways
         for (Loc node : boardDict.keySet()) {
-            List<Loc> locList = Arrays.asList(new Loc(node.x, node.y + 1, "hallway", null),
+            List<Loc> locList = Arrays.asList(new Loc(node.x, node.y + 1, "hallway", null), //TODO XY Row Col
                     new Loc(node.x, node.y - 1, "hallway", null),
                     new Loc(node.x + 1, node.y, "hallway", null),
                     new Loc(node.x - 1, node.y, "hallway", null));
@@ -73,34 +78,35 @@ public class Board {
                 boardDict.get(hall).add(thisRoom);
             }
         }
-//
-//
-//        ArrayList<ArrayList<String>> roomList = FileReader.parseFileAsListofLists("data/rooms.txt");
-//        for (ArrayList<String> r : roomList) {
-//            Room myRoom = null;
-//            for (Room room : Room.rooms) {
-//                if (room.name.equals(r.get(0).trim())) {
-//                    myRoom = room; //gotcha!
-//                }
-//            }
-//            Loc thisRoom = new Loc(0, 0, r.get(0).trim(), myRoom);
-//            boardDict.put(thisRoom, new ArrayList<>());
-//            for (String coords : r.subList(1, r.size())) {
-//                coords = coords.replaceAll("[() ]", "");
-//                ArrayList<String> coordList = new ArrayList<>(Arrays.asList(coords.split(",")));
-//                int x = Integer.parseInt(coordList.get(0));
-//                int y = Integer.parseInt(coordList.get(1));
-//                boardDict.get(thisRoom).add(new Loc(x, y, "hallway", null));
-//            }
-//        }
-//        //add hallway references to rooms
-//        for (Room room : Room.rooms) {
-//            Loc tempRoom = new Loc(0, 0, room.name, room);
-//            for (Loc hallway : boardDict.get(tempRoom)) {
-//                boardDict.get(hallway).add(tempRoom);
-//            }
-//
-//        }
+
+/**
+        ArrayList<ArrayList<String>> roomList = FileReader.parseFileAsListofLists("data/rooms.txt");
+        for (ArrayList<String> r : roomList) {
+            Room myRoom = null;
+            for (Room room : Room.rooms) {
+                if (room.name.equals(r.get(0).trim())) {
+                    myRoom = room; //gotcha!
+                }
+            }
+            Loc thisRoom = new Loc(0, 0, r.get(0).trim(), myRoom);
+            boardDict.put(thisRoom, new ArrayList<>());
+            for (String coords : r.subList(1, r.size())) {
+                coords = coords.replaceAll("[() ]", "");
+                ArrayList<String> coordList = new ArrayList<>(Arrays.asList(coords.split(",")));
+                int x = Integer.parseInt(coordList.get(0));
+                int y = Integer.parseInt(coordList.get(1));
+                boardDict.get(thisRoom).add(new Loc(x, y, "hallway", null));
+            }
+        }
+        //add hallway references to rooms
+        for (Room room : Room.rooms) {
+            Loc tempRoom = new Loc(0, 0, room.name, room);
+            for (Loc hallway : boardDict.get(tempRoom)) {
+                boardDict.get(hallway).add(tempRoom);
+            }
+
+        }
+ */
 
 
         //add passage references
@@ -123,6 +129,10 @@ public class Board {
         }
     }
 
+    /**
+     * Print out a list of spaces linked to a list of spaces it touches
+     * @return aforementioned list in string form
+     */
     @Override
     public String toString() {
         String string = "";
@@ -132,6 +142,12 @@ public class Board {
         return string;
     }
 
+    /**
+     * Find the shortest path between two spaces
+     * @param start the space you're on
+     * @param end the space you want to go to
+     * @return a list of locations connecting start and end
+     */
     public ArrayList<Loc> bfs(Loc start, Loc end) {
         ArrayList<ArrayList<Loc>> queue = new ArrayList<>();
         queue.add(new ArrayList<>(Arrays.asList(start)));

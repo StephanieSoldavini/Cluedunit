@@ -3,7 +3,16 @@ package plaintext;
 /**
  * Created by Stephanie on 8/26/15.
  */
+
 public class ConsoleCode {
+    /**
+     * Put the cursor at the provided (row, col) where the origin is the conservatory
+     *
+     * @param row number of spaces horizontally from origin
+     * @param col number of spaces vertically from origin
+     * @param ascii true if coords represent the actual cursor location, false if board location
+     * @return a string to print to console to perform the operation
+     */
     public static String goTo(int row, int col, boolean ascii){
         if (ascii) {
             return "\33[" + row + ";" + col + "H";
@@ -13,8 +22,21 @@ public class ConsoleCode {
         }
     }
 
+    /**
+     * Clear from the cursor to the end of the console window
+     *
+     * @return a string to print to console to perform the operation
+     */
+    public static String clearToEnd(){
+        return "\33[J";
+    }
 
-
+    /**
+     * Change the font color
+     *
+     * @param color the color to change to
+     * @return a string to print to console to perform the operation
+     */
     public static String changeTextColor(String color){
         switch (color){
             case "red":
