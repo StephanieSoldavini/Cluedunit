@@ -1,6 +1,7 @@
 package engine;
 
 /**
+ * Class to describe locations (both room and hallway)
  * Created by Stephanie on 2/16/15.
  */
 public class Loc {
@@ -17,6 +18,12 @@ public class Loc {
         return y;
     }
 
+    /**
+     * @param x in terms of spaces, where 0 is left and increases as you move right
+     * @param y 0 is top and increases downward
+     * @param name what is this called (Ballroom, hallway, lounge, etc.)
+     * @param room Room object. Null if hallway
+     */
     public Loc(int x, int y, String name, Room room) {
         this.x = x;
         this.y = y;

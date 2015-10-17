@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * Board class that stores the connections between squares and rooms.
+ * It can provide the shortest route between locations
  * Created by Stephanie on 2/20/15.
  */
 public class Board {
@@ -14,6 +16,7 @@ public class Board {
     ArrayList<Room> rooms = new ArrayList<>();
     ArrayList<ArrayList<Loc>> board = new ArrayList<>();
     HashMap<Loc, ArrayList<Loc>> boardDict = new HashMap<>();
+
 
     /**
      * Create a Clue board
@@ -130,8 +133,12 @@ public class Board {
     }
 
     /**
+<<<<<<< HEAD:JavaClue/src/engine/Board.java
      * Print out a list of spaces linked to a list of spaces it touches
      * @return aforementioned list in string form
+=======
+     * @return a string that tells (for every possible location) it's connecting squares
+>>>>>>> origin/GraphicsSteph:JavaClue/src/Board.java
      */
     @Override
     public String toString() {
@@ -143,10 +150,19 @@ public class Board {
     }
 
     /**
+<<<<<<< HEAD:JavaClue/src/engine/Board.java
      * Find the shortest path between two spaces
      * @param start the space you're on
      * @param end the space you want to go to
      * @return a list of locations connecting start and end
+=======
+     * Performs a breadth first search to determine the best way to get from one location to another
+     * To be used for players determining the fastest route between rooms
+     * @param start where are you (the player) right now
+     * @param end where do you want to go?
+     * @return what the shortest (legal) path is (null is returned if no path is found)
+     *
+>>>>>>> origin/GraphicsSteph:JavaClue/src/Board.java
      */
     public ArrayList<Loc> bfs(Loc start, Loc end) {
         ArrayList<ArrayList<Loc>> queue = new ArrayList<>();

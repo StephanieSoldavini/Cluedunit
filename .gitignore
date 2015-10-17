@@ -7,3 +7,4 @@ JavaClue/out/
 *.class
 JavaClue/.idea/
 .idea/
+*.log

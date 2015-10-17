@@ -34,7 +34,9 @@ public class FileReader {
         return result;
     }
 
+
     public static ArrayList<ArrayList<String>> parseFileAsListofLists(String fileName) {
+
         ArrayList<ArrayList<String>> lst = new ArrayList<>();
         Scanner scan = openFile(fileName);
         while (scan.hasNextLine()) {
