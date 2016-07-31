@@ -8,3 +8,6 @@ JavaClue/out/
 JavaClue/.idea/
 .idea/
 *.log
+*.o
+*.swp
+.ycm_extra_conf.py
