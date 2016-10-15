@@ -168,7 +168,7 @@ public class Main {
 
         scan.nextLine();
 
-        System.out.println(blankTwoSpaces(0, 6) + writeCharAtRowCol(1, 6, Char.getCharByAbbr("PE")));
+        System.out.println(blankTwoSpaces(0, 6) + `(1, 6, Char.getCharByAbbr("PE")));
         scan.nextLine();
 
         System.out.println("\33[0m");
