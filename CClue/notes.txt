@@ -1,0 +1,10 @@
+&~ = Rope
+}{ = Candlestick
+=- = Knife
+r= = Revolver
+// = Lead Pipe
+=u = Wrench
+abcdefghijklmnopqrstuvwxyz
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+`1234567890-=~!@#$%^&*()_+
+[]\{}|;':",./<>?
