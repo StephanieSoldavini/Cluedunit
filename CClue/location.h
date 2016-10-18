@@ -6,11 +6,12 @@ typedef struct room {
 } room;
 
 typedef struct location {
-    room *rm_p;
+    room *rm;
     int col;
     int row;
+    struct location *adj[4];
 } location;
 
-location *newLocation( int col, int row, room *rm_p );
-void deleteLocation( location *loc_p );
-void locationToString( location *loc_p, char *buffer, unsigned int buffLen );
+location *newLocation( int col, int row, room *rm );
+void deleteLocation( location *loc );
+void locationToString( location *loc, char *buffer, unsigned int buffLen );
