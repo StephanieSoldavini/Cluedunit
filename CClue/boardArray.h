@@ -1,0 +1,5 @@
+const location board[] = 
+    {
+        {
+            NULL,
+

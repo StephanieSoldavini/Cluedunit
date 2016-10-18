@@ -2,43 +2,37 @@
 
 <CluePiece>:
     canvas:
+        Ellipse:
+            source: 'images/white.png'
+            pos: root.pos
+            size: (850 * (.03), 850 * (.03))
+
+<ClueBoard>:
+    canvas:
+        Rectangle:
+            source: 'images/ScanBoardSmall.jpg'
+            pos: self.parent.pos
+            size: self.size
+
+<ClueGame>:
+    white: clue_piece
+
+    canvas:
 #        Color: 
 #            rgb:
 #                (0, 0, 0)
         Rectangle:
-            source: 'images/whitepawn.png'
-            pos: self.pos
             size: self.size
-#        Color:
-#            rgb:
-#                (1, 1, 1)
-#        Ellipse:
-#            pos: self.pos
-#            size: (self.size[0] * .9, self.size[1])         
+            pos: self.pos     
 
-
-<ClueBoard>:
-
-    size_hint: .941, 1 
-    canvas:
-        Rectangle:
-            source: 'images/ScanBoardRect.jpg'
-            pos: self.pos
-            size: self.size
-
-
-<ClueGame>:
-    white: white
-    
     ClueBoard:
-        allow_stretch: False
-        keep_ratio: True
         id: clue_board
-        size: root.size
-        pos: root.pos
+        size: (root.height, root.height) if (root.width > root.height) else (root.width, root.width) 
+        center: root.center
+        #scale: 1, 1
 
     CluePiece:
-        id: white
-        #pos: 582.25, 21.75
-        size: (root.width*(.03), root.height*(.035))
-        #center: root.center
+        id: clue_piece
+        pos: 582.25, 21.75
+        size: (self.parent.height*(30/100), self.parent.width*(30/100))
+

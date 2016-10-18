@@ -23,7 +23,6 @@ def addToBoard(lst, board):
         board[x][y] = places[2].strip()
 
 def fillBoard():
-
     board = createBoard(24, 25)
 
     #rooms = openFile("rooms")
