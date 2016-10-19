@@ -1,12 +1,18 @@
 CC = clang
 CFLAGS = -g -Wall -pedantic -ansi
+PROGDIR = out/
 PROG = out
 SRC = main.c dictionary.c location.c
 TEST = test
 TESTSRC = test.c
 
 $(PROG): $(SRC)
-	$(CC) $(CFLAGS) $(SRC) -o $(PROG)
+	mkdir -p $(PROGDIR)
+	$(CC) $(CFLAGS) $(SRC) -o $(PROGDIR)$(PROG)
 
 $(TEST): $(TESTSRC)
-	$(CC) $(CFLAGS) $(TESTSRC) -o $(TEST)
+	mkdir -p $(PROGDIR)
+	$(CC) $(CFLAGS) $(TESTSRC) -o $(PROGDIR)$(TEST)
+
+clean: 
+	-rm -rf $(PROGDIR)
