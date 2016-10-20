@@ -1,5 +1,5 @@
-rooms = ["Conservatory", "Ballroom", "Kitchen", "Billiard Room", \
-         "Dining Room", "Library", "Study", "Hall", "Lounge"]
+rooms = ["Conservatory", "Ballroom", "Kitchen", "BilliardRoom", \
+         "DiningRoom", "Library", "Study", "Hall", "Lounge"]
 
 def openFile(file):
     lst = []

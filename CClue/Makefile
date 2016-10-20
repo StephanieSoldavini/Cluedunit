@@ -5,6 +5,9 @@ PROG = out
 SRC = main.c dictionary.c location.c
 TEST = test
 TESTSRC = test.c
+PYTHON = python3
+
+all: $(PROG)
 
 $(PROG): $(SRC)
 	mkdir -p $(PROGDIR)
@@ -13,6 +16,9 @@ $(PROG): $(SRC)
 $(TEST): $(TESTSRC)
 	mkdir -p $(PROGDIR)
 	$(CC) $(CFLAGS) $(TESTSRC) -o $(PROGDIR)$(TEST)
+
+board:
+	$(PYTHON) genBoard.py
 
 clean: 
 	-rm -rf $(PROGDIR)

@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "dictionary.h"
 #include "location.h"
 
 typedef struct dictEntry {
@@ -16,6 +15,7 @@ int myHash(void *key_p)
 
 int main(int argc, char *argv[])
 {
+    /*
     char buffer[256];
     dictionary *myDict = newDictionary(30, &myHash); 
     location *loc1 = newLocation(1, 2, NULL);
@@ -32,5 +32,6 @@ int main(int argc, char *argv[])
     printf("Finished ToString\n");
     printf("%s\n", buffer);
     printf("Hey something happened.\n");
+    */
     return 0;
 }
