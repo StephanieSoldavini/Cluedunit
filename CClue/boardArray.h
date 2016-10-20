@@ -1,5 +1,0 @@
-const location board[] = 
-    {
-        {
-            NULL,
-
