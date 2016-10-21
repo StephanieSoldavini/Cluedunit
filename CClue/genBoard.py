@@ -86,8 +86,11 @@ def main():
             if isinstance(loc, tuple):
                 col = loc[1]
                 row = loc[0]
-                name = "hallway_r" + str(row) + "c" + str(col)
                 room = "NULL"
+                if "Home" in boardArray[loc[0]][loc[1]]:
+                    name = boardArray[loc[0]][loc[1]];
+                else:
+                    name = "hallway_r" + str(row) + "c" + str(col)
             elif isinstance(loc, str):
                 name = loc
                 room = loc
@@ -101,7 +104,8 @@ def main():
             for i in range(len(boardDict[loc])):
                 adj = boardDict[loc][i]
                 if isinstance(adj, tuple):
-                    adjs[i] = "&hallway_r" + str(adj[0]) + "c" + str(adj[1])
+                    if boardArray[adj[0]][adj[1]] == "hallway":
+                        adjs[i] = "&hallway_r" + str(adj[0]) + "c" + str(adj[1])
                 elif isinstance(adj, str):
                     adjs[i] = "&" + adj
             f.write("const location {name} = {{{room}, {row}, {col}, {{{adj0}, {adj1}, {adj2}, {adj3}}}}};\n".format(name=name, room=room, row=row, col=col, adj0=adjs[0], adj1=adjs[1], adj2=adjs[2], adj3=adjs[3])) 
