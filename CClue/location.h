@@ -8,11 +8,11 @@ typedef struct room {
 } room;
 
 typedef struct location {
-    room *rm;
+    const struct location *room;
     int col;
     int row;
-    struct location *adj[4];
+    const struct location *adj[4];
 } location;
 
-void locationToString( location *loc, char *buffer, unsigned int buffLen );
-location* move( location *loc, direction dir );
+void locationToString( const location *loc, char *buffer, unsigned int buffLen );
+const location* move( const location *loc, direction dir );

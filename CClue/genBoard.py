@@ -93,9 +93,25 @@ def main():
                     name = "hallway_r" + str(row) + "c" + str(col)
             elif isinstance(loc, str):
                 name = loc
-                room = loc
-                col = "NULL"
-                row = "NULL"
+            else:
+                name = "INVALID"
+            f.write("const location {name};\n".format(name=name)) 
+
+        for loc in boardDict:
+            adjs = 4*["NULL"] 
+            if isinstance(loc, tuple):
+                col = loc[1]
+                row = loc[0]
+                room = "NULL"
+                if "Home" in boardArray[loc[0]][loc[1]]:
+                    name = boardArray[loc[0]][loc[1]];
+                else:
+                    name = "hallway_r" + str(row) + "c" + str(col)
+            elif isinstance(loc, str):
+                name = loc
+                room = "&" + loc
+                col = "0"
+                row = "0"
             else:
                 name = "INVALID"
                 room = "INVALID"

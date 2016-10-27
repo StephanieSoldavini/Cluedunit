@@ -1,15 +1,16 @@
+#include <stdio.h>
 #include "location.h"
 
-void locationToString( location *loc, char *buffer, unsigned int buffLen )
+void locationToString( const location *loc, char *buffer, unsigned int buffLen )
 {
-    if (loc->rm != NULL) {
+    if (loc->room != NULL) {
         snprintf(buffer, buffLen, "(%d, %d)", loc->col, loc->row);
     } else {
-        snprintf(buffer, buffLen, "%s", loc->rm->name);
+        snprintf(buffer, buffLen, "%s", "there's a room here");
     }
 }
 
-location* move(location *loc, direction dir)
+const location* move( const location *loc, direction dir )
 {
     int searchCol = loc->col;
     int searchRow = loc->row;
