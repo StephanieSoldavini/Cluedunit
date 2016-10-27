@@ -80,7 +80,37 @@ def main():
 
     boardDict = createGrid(boardArray);
    
+    for loc in boardDict:
+        adjs = 4*["NULL"] 
+        if isinstance(loc, tuple):
+            col = loc[1]
+            row = loc[0]
+            room = "NULL"
+            if "Home" in boardArray[loc[0]][loc[1]]:
+                name = boardArray[loc[0]][loc[1]];
+            else:
+                name = "hallway_r" + str(row) + "c" + str(col)
+        elif isinstance(loc, str):
+            name = loc
+            room = loc + "Str"
+            col = "0"
+            row = "0"
+        else:
+            name = "INVALID"
+            room = "INVALID"
+            col = "INVALID"
+            row = "INVALID"
+        for i in range(len(boardDict[loc])):
+            adj = boardDict[loc][i]
+            if isinstance(adj, tuple):
+                if boardArray[adj[0]][adj[1]] == "hallway":
+                    adjs[i] = "&hallway_r" + str(adj[0]) + "c" + str(adj[1])
+            elif isinstance(adj, str):
+                adjs[i] = "&" + adj
+   
+
     with open("boardGraph.h", 'w') as f:
+        f.write("#include \"location.h\"\n");
         for loc in boardDict:
             adjs = 4*["NULL"] 
             if isinstance(loc, tuple):
@@ -93,6 +123,7 @@ def main():
                     name = "hallway_r" + str(row) + "c" + str(col)
             elif isinstance(loc, str):
                 name = loc
+                f.write("const char {name}Str[{lenName}] = \"{name}\\0\";\n".format(name=name, lenName=(len(name)+1)))
             else:
                 name = "INVALID"
             f.write("const location {name};\n".format(name=name)) 
@@ -109,7 +140,7 @@ def main():
                     name = "hallway_r" + str(row) + "c" + str(col)
             elif isinstance(loc, str):
                 name = loc
-                room = "&" + loc
+                room = loc + "Str"
                 col = "0"
                 row = "0"
             else:

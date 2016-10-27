@@ -1,3 +1,6 @@
+#ifndef __LOCATION_H__
+#define __LOCATION_H__
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -8,7 +11,7 @@ typedef struct room {
 } room;
 
 typedef struct location {
-    const struct location *room;
+    const char *room;
     int col;
     int row;
     const struct location *adj[4];
@@ -16,3 +19,5 @@ typedef struct location {
 
 void locationToString( const location *loc, char *buffer, unsigned int buffLen );
 const location* move( const location *loc, direction dir );
+
+#endif
