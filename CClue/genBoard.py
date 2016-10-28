@@ -78,8 +78,10 @@ def main():
                 y = int(square.strip())
                 boardArray[x][y] = "hallway"
 
-    boardDict = createGrid(boardArray);
+    boardDict = createGrid(boardArray)
    
+    detailedBoardDict = {}
+
     for loc in boardDict:
         adjs = 4*["NULL"] 
         if isinstance(loc, tuple):
@@ -107,54 +109,21 @@ def main():
                     adjs[i] = "&hallway_r" + str(adj[0]) + "c" + str(adj[1])
             elif isinstance(adj, str):
                 adjs[i] = "&" + adj
+        detailedBoardDict[name] = [room, col, row, adjs, 0]
    
 
     with open("boardGraph.h", 'w') as f:
         f.write("#include \"location.h\"\n");
-        for loc in boardDict:
-            adjs = 4*["NULL"] 
-            if isinstance(loc, tuple):
-                col = loc[1]
-                row = loc[0]
-                room = "NULL"
-                if "Home" in boardArray[loc[0]][loc[1]]:
-                    name = boardArray[loc[0]][loc[1]];
-                else:
-                    name = "hallway_r" + str(row) + "c" + str(col)
-            elif isinstance(loc, str):
-                name = loc
+        for name in detailedBoardDict:
+            (room, col, row, adjs, written) = tuple(detailedBoardDict[name])
+            for adj in adjs:
+                if adj is not "NULL":
+                    adj = adj[1:]
+                    if detailedBoardDict[adj][4] == 0:
+                        f.write("const location {name};\n".format(name=adj)) 
+                        detailedBoardDict[adj][4] = 1
+            if "hallway" not in name:
                 f.write("const char {name}Str[{lenName}] = \"{name}\\0\";\n".format(name=name, lenName=(len(name)+1)))
-            else:
-                name = "INVALID"
-            f.write("const location {name};\n".format(name=name)) 
-
-        for loc in boardDict:
-            adjs = 4*["NULL"] 
-            if isinstance(loc, tuple):
-                col = loc[1]
-                row = loc[0]
-                room = "NULL"
-                if "Home" in boardArray[loc[0]][loc[1]]:
-                    name = boardArray[loc[0]][loc[1]];
-                else:
-                    name = "hallway_r" + str(row) + "c" + str(col)
-            elif isinstance(loc, str):
-                name = loc
-                room = loc + "Str"
-                col = "0"
-                row = "0"
-            else:
-                name = "INVALID"
-                room = "INVALID"
-                col = "INVALID"
-                row = "INVALID"
-            for i in range(len(boardDict[loc])):
-                adj = boardDict[loc][i]
-                if isinstance(adj, tuple):
-                    if boardArray[adj[0]][adj[1]] == "hallway":
-                        adjs[i] = "&hallway_r" + str(adj[0]) + "c" + str(adj[1])
-                elif isinstance(adj, str):
-                    adjs[i] = "&" + adj
             f.write("const location {name} = {{{room}, {row}, {col}, {{{adj0}, {adj1}, {adj2}, {adj3}}}}};\n".format(name=name, room=room, row=row, col=col, adj0=adjs[0], adj1=adjs[1], adj2=adjs[2], adj3=adjs[3])) 
 
 
