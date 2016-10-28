@@ -30,7 +30,6 @@ def createGrid(board):
             elif "Home" in board[x][y]:   
                 boardDict[(x, y)] = []
 
-
     # ask all of the hallways if they have neighbors and add
     # references to those neighbors
     for node in boardDict:
@@ -84,6 +83,7 @@ def main():
 
     for loc in boardDict:
         adjs = 4*["NULL"] 
+
         if isinstance(loc, tuple):
             col = loc[1]
             row = loc[0]
@@ -102,6 +102,7 @@ def main():
             room = "INVALID"
             col = "INVALID"
             row = "INVALID"
+
         for i in range(len(boardDict[loc])):
             adj = boardDict[loc][i]
             if isinstance(adj, tuple):
@@ -109,9 +110,9 @@ def main():
                     adjs[i] = "&hallway_r" + str(adj[0]) + "c" + str(adj[1])
             elif isinstance(adj, str):
                 adjs[i] = "&" + adj
+
         detailedBoardDict[name] = [room, col, row, adjs, 0]
    
-
     with open("boardGraph.h", 'w') as f:
         f.write("#include \"location.h\"\n");
         for name in detailedBoardDict:
@@ -122,11 +123,18 @@ def main():
                     if detailedBoardDict[adj][4] == 0:
                         f.write("const location {name};\n".format(name=adj)) 
                         detailedBoardDict[adj][4] = 1
-            if "hallway" not in name:
-                f.write("const char {name}Str[{lenName}] = \"{name}\\0\";\n".format(name=name, lenName=(len(name)+1)))
-            f.write("const location {name} = {{{room}, {row}, {col}, {{{adj0}, {adj1}, {adj2}, {adj3}}}}};\n".format(name=name, room=room, row=row, col=col, adj0=adjs[0], adj1=adjs[1], adj2=adjs[2], adj3=adjs[3])) 
-            detailedBoardDict[name][4] = 1
 
+            if "hallway" not in name:
+                f.write("const char {name}Str[{lenName}] = \"{name}\\0\";\n"\
+                        .format(name=name, lenName=(len(name)+1)))
+
+            f.write(("const location {name} = {{{room}, {row}, {col}, " \
+                    "{{{adj0}, {adj1}, {adj2}, {adj3}}}}};\n")          \
+                    .format(name=name, room=room, row=row, col=col,     \
+                            adj0=adjs[0], adj1=adjs[1],                 \
+                            adj2=adjs[2], adj3=adjs[3])) 
+
+            detailedBoardDict[name][4] = 1
 
 if __name__ == '__main__':
     main()
