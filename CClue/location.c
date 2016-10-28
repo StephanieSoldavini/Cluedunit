@@ -3,7 +3,9 @@
 
 void locationToString( const location *loc, char *buffer, unsigned int buffLen )
 {
-    if (loc->room != NULL) {
+    if (loc == NULL) {
+        snprintf(buffer, buffLen, "%s", "NULL");
+    } else if (loc->room != NULL) {
         snprintf(buffer, buffLen, "%s", loc->room);
     } else {
         snprintf(buffer, buffLen, "(%d, %d)", loc->col, loc->row);
