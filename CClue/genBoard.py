@@ -125,6 +125,7 @@ def main():
             if "hallway" not in name:
                 f.write("const char {name}Str[{lenName}] = \"{name}\\0\";\n".format(name=name, lenName=(len(name)+1)))
             f.write("const location {name} = {{{room}, {row}, {col}, {{{adj0}, {adj1}, {adj2}, {adj3}}}}};\n".format(name=name, room=room, row=row, col=col, adj0=adjs[0], adj1=adjs[1], adj2=adjs[2], adj3=adjs[3])) 
+            detailedBoardDict[name][4] = 1
 
 
 if __name__ == '__main__':
