@@ -1,5 +1,6 @@
+VPATH = src
 CC = clang
-CFLAGS = -g -Wall -pedantic -ansi
+CFLAGS = -g -Wall -pedantic -ansi -Isrc -Iinc
 PROGDIR = out/
 PROG = out
 SRC = main.c location.c
@@ -11,16 +12,15 @@ TESTSRC = test.c
 PYTHON = python3
 PYPRG = genBoard.py
 
-.PHONY: all
+.PHONY: all depend
 all: $(PROG)
 
-
 depend: .depend
-.depend: $(SRC)
+.depend: $(SRC) $(PYPRGOUT)
 	-rm -f ./.depend
 	$(CC) $(CFLAGS) -MM $^ -MF ./.depend;
 
-include .depend
+-include .depend
 
 $(PROG): $(PYPRGOUT) $(OBJ) depend
 	mkdir -p $(PROGDIR)
@@ -31,7 +31,7 @@ $(TEST): $(TESTSRC)
 	$(CC) $(CFLAGS) $(TESTSRC) -o $(PROGDIR)$(TEST)
 
 $(PYPRGOUT): $(PYPRG)
-	$(PYTHON) $(PYPRG)
+	$(PYTHON) $^
 
 clean: 
 	-rm -rf $(PROGDIR)
