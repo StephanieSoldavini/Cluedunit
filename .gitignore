@@ -16,3 +16,4 @@ tags
 *.ses
 out/
 boardGraph.h
+.depend

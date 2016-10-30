@@ -10,9 +10,21 @@ TESTSRC = test.c
 PYTHON = python3
 PYPRG = genBoard.py
 
+.PHONY: all
 all: $(PROG)
 
-$(PROG): $(SRC) $(HDR)
+# Convert each .c file to a .o file
+.c.o: 
+	echo "compile $<"
+	$(CC) $(CFLAGS) -c $<
+
+depend: .depend
+.depend: $(SRC)
+	-rm -f ./.depend
+	$(CC) $(CFLAGS) -MM $^ -MF  ./.depend;
+include .depend
+
+$(PROG): $(PYPRGOUT) $(SRC)
 	mkdir -p $(PROGDIR)
 	$(CC) $(CFLAGS) $(SRC) -o $(PROGDIR)$(PROG)
 
@@ -25,3 +37,4 @@ $(PYPRGOUT): $(PYPRG)
 
 clean: 
 	-rm -rf $(PROGDIR)
+	-rm $(PYPRGOUT)
