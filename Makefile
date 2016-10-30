@@ -1,12 +1,12 @@
 VPATH = src
 CC = clang
-CFLAGS = -g -Wall -pedantic -ansi -Isrc -Iinc
+INC = include/
+CFLAGS = -g -Wall -pedantic -ansi -Isrc -I$(INC)
 PROGDIR = out/
 PROG = out
 SRC = main.c location.c
 OBJ = $(patsubst %.c,%.o,$(SRC))
-PYPRGOUT = boardGraph.h
-HDR = $(PYPRGOUT) location.h
+PYPRGOUT = $(INC)boardGraph.h
 TEST = test
 TESTSRC = test.c
 PYTHON = python3
@@ -16,6 +16,7 @@ PYPRG = genBoard.py
 all: $(PROG)
 
 depend: .depend
+
 .depend: $(SRC) $(PYPRGOUT)
 	-rm -f ./.depend
 	$(CC) $(CFLAGS) -MM $^ -MF ./.depend;
@@ -31,6 +32,7 @@ $(TEST): $(TESTSRC)
 	$(CC) $(CFLAGS) $(TESTSRC) -o $(PROGDIR)$(TEST)
 
 $(PYPRGOUT): $(PYPRG)
+	mkdir -p $(INC)
 	$(PYTHON) $^
 
 clean: 

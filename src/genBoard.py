@@ -1,9 +1,9 @@
 rooms = ["Conservatory", "Ballroom", "Kitchen", "BilliardRoom", \
          "DiningRoom", "Library", "Study", "Hall", "Lounge"]
-roomsFile = "../data/rooms.txt"
-homeSpacesFile = "../data/homeSpaces.txt"
-hallwaysFile = "../data/hallways.txt"
-boardGraphFile = "../include/boardGraph.h"
+roomsFile = "data/rooms.txt"
+homeSpacesFile = "data/homeSpaces.txt"
+hallwaysFile = "data/hallways.txt"
+boardGraphFile = "include/boardGraph.h"
 
 def openFile(file):
     lst = []
