@@ -1,4 +1,4 @@
 Clue
 ====
 
-A software version of the game of Clue
+A command line interface to play the game Clue.
