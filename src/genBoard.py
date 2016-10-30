@@ -41,7 +41,7 @@ def createGrid(board):
 
     # process the rooms and create keys for them and add
     # references to hallways
-    roomList = openFile("rooms.txt")
+    roomList = openFile("data/rooms.txt")
     for r in roomList:
         doors = [tuple(int(f1) for f1 in f) for f in \
                  [a.strip("() ").split(",") for a in r[1:]]]
@@ -63,13 +63,13 @@ def createGrid(board):
 def main():
     boardArray = createBoard(24, 25)
 
-    homeSpaces = openFile("homeSpaces.txt")
+    homeSpaces = openFile("data/homeSpaces.txt")
     for places in homeSpaces:
         x = int(places[0].strip())
         y = int(places[1].strip())
         boardArray[x][y] = places[2].strip()
 
-    hallways = openFile("hallways.txt")
+    hallways = openFile("data/hallways.txt")
     for halls in range(len(hallways)):
         x = halls
         for square in hallways[halls]:
@@ -113,7 +113,7 @@ def main():
 
         detailedBoardDict[name] = [room, col, row, adjs, 0]
    
-    with open("boardGraph.h", 'w') as f:
+    with open("include/boardGraph.h", 'w') as f:
         f.write("#include \"location.h\"\n");
         for name in detailedBoardDict:
             (room, col, row, adjs, written) = tuple(detailedBoardDict[name])
