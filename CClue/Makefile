@@ -3,6 +3,7 @@ CFLAGS = -g -Wall -pedantic -ansi
 PROGDIR = out/
 PROG = out
 SRC = main.c location.c
+OBJ = $(patsubst %.c,%.o,$(SRC))
 PYPRGOUT = boardGraph.h
 HDR = $(PYPRGOUT) location.h
 TEST = test
@@ -13,20 +14,17 @@ PYPRG = genBoard.py
 .PHONY: all
 all: $(PROG)
 
-# Convert each .c file to a .o file
-.c.o: 
-	echo "compile $<"
-	$(CC) $(CFLAGS) -c $<
 
 depend: .depend
 .depend: $(SRC)
 	-rm -f ./.depend
 	$(CC) $(CFLAGS) -MM $^ -MF  ./.depend;
+
 include .depend
 
-$(PROG): $(PYPRGOUT) $(SRC)
+$(PROG): $(PYPRGOUT) $(OBJ) depend
 	mkdir -p $(PROGDIR)
-	$(CC) $(CFLAGS) $(SRC) -o $(PROGDIR)$(PROG)
+	$(CC) $(CFLAGS) $(OBJ) -o $(PROGDIR)$(PROG)
 
 $(TEST): $(TESTSRC)
 	mkdir -p $(PROGDIR)
