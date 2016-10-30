@@ -18,13 +18,13 @@ all: $(PROG)
 depend: .depend
 .depend: $(SRC)
 	-rm -f ./.depend
-	$(CC) $(CFLAGS) -MM $^ -MF  ./.depend;
+	$(CC) $(CFLAGS) -MM $^ -MF ./.depend;
 
 include .depend
 
 $(PROG): $(PYPRGOUT) $(OBJ) depend
 	mkdir -p $(PROGDIR)
-	$(CC) $(CFLAGS) $(OBJ) -o $(PROGDIR)$(PROG)
+	$(CC) $(OBJ) -o $(PROGDIR)$(PROG)
 
 $(TEST): $(TESTSRC)
 	mkdir -p $(PROGDIR)
@@ -35,4 +35,5 @@ $(PYPRGOUT): $(PYPRG)
 
 clean: 
 	-rm -rf $(PROGDIR)
-	-rm $(PYPRGOUT)
+	-rm -rf $(PYPRGOUT)
+	-rm -rf *.o
