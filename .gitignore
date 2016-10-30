@@ -1,19 +1,13 @@
-Program Files/__pycache__
-Program Files\__pycache__\
-Program Files\.idea\*
-*.pyc
 *.xml
-JavaClue/out/
-*.class
-JavaClue/.idea/
-.idea/
 *.log
 *.o
 *.swp
-.ycm_extra_conf.py
+*.ycm_extra_conf.py*
 tags
 *.dSYM/
 *.ses
 out/
-boardGraph.h
+build/
 .depend
+bin/*
+*boardGraph.h
