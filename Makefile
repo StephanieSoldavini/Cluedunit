@@ -6,27 +6,31 @@ BUILDDIR = build/
 VPATH = $(SRCDIR)
 CC = clang
 CFLAGS = -MMD -g -Wall -pedantic -ansi -I$(SRCDIR) -I$(INCDIR)
-PROG = out
+
+PROG = $(PROGDIR)out
 SRC = location.c main.c 
 OBJ = $(patsubst %.c,$(BUILDDIR)%.o,$(SRC))
 DEP = $(patsubst %.c,$(BUILDDIR)%.d,$(SRC))
-PYPRGOUT = $(INCDIR)boardGraph.h
-TEST = test
+
+TEST = $(PROGDIR)test
 TESTSRC = test.c
+
 PYTHON = python3
 PYPRG = genBoard.py
+PYPRGOUT = $(INCDIR)boardGraph.h
 
-.PHONY: all 
+.PHONY: all clean
+
 all: $(PROG) 
 
 $(BUILDDIR)%.o : %.c | $(BUILDDIR) $(PYPRGOUT)
-	$(COMPILE.c) $(OUTPUT_OPTION) $<
+	$(COMPILE.c) -o $@ $<
 
 $(PROG): $(OBJ) | $(PROGDIR)
-	$(LINK.o) $^ $(LOADLIBES) $(LDLIBS) -o $(PROGDIR)$(PROG)
+	$(LINK.o) $^ $(LOADLIBES) $(LDLIBS) -o $(PROG)
 
 $(TEST): $(TESTSRC) | $(PROGDIR)
-	$(CC) $(CFLAGS) $(TESTSRC) -o $(PROGDIR)$(TEST)
+	$(CC) $(CFLAGS) $(TESTSRC) -o $(TEST)
 
 $(PYPRGOUT): $(PYPRG) | $(INCDIR)
 	$(PYTHON) $^
