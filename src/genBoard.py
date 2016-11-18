@@ -95,7 +95,7 @@ def main():
             if "Home" in boardArray[loc[0]][loc[1]]:
                 name = boardArray[loc[0]][loc[1]];
             else:
-                name = "hallway_r" + str(row) + "c" + str(col)
+                name = "hw_r" + str(row) + "_c" + str(col)
         elif isinstance(loc, str):
             name = loc
             room = loc + "Str"
@@ -111,7 +111,7 @@ def main():
             adj = boardDict[loc][i]
             if isinstance(adj, tuple):
                 if boardArray[adj[0]][adj[1]] == "hallway":
-                    adjs[i] = "&hallway_r" + str(adj[0]) + "c" + str(adj[1])
+                    adjs[i] = "&hw_r" + str(adj[0]) + "_c" + str(adj[1])
             elif isinstance(adj, str):
                 adjs[i] = "&" + adj
 
@@ -128,9 +128,11 @@ def main():
                         f.write("const location {name};\n".format(name=adj)) 
                         detailedBoardDict[adj][4] = 1
 
-            if "hallway" not in name:
+            if "hw" not in name:
                 f.write("const char {name}Str[{lenName}] = \"{name}\\0\";\n"\
                         .format(name=name, lenName=(len(name)+1)))
+                # sort the adj list so the doors are numbered correctly
+                adjs.sort(key=lambda x: [x == "NULL", 'hw' not in x, [int(y[1:]) for y in x.split('_')[1:3] if y != '']])
 
             f.write(("const location {name} = {{{room}, {row}, {col}, " \
                     "{{{adj0}, {adj1}, {adj2}, {adj3}}}}};\n")          \
