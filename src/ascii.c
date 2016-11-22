@@ -26,29 +26,36 @@ void clearToEnd(FILE *stream)
 {
     fprintf(stream, "\33[J");
 }
-/*
+
 void changeTextColor(FILE *stream, color fontColor)
 {
     char string[10];
     switch(fontColor) {
         case RED:
-            string = "\33[0;31m";
+            snprintf(string, sizeof(string), "\33[0;31m");
+            break;
         case GREEN:
-            string = "\33[0;32m";
+            snprintf(string, sizeof(string), "\33[0;32m");
+            break;
         case YELLOW:
-            string = "\33[0;33m";
+            snprintf(string, sizeof(string), "\33[0;33m");
+            break;
         case BLUE:
-            string = "\33[1;34m";
+            snprintf(string, sizeof(string), "\33[1;35m");
+            break;
         case PURPLE:
-            string = "\33[0;35m";
+            snprintf(string, sizeof(string), "\33[0;35m");
+            break;
         case WHITE:
-            string = "\33[0;37m";
+            snprintf(string, sizeof(string), "\33[0;37m");
+            break;
         default:
-            string = "\33[0m";
+            snprintf(string, sizeof(string), "\33[0m");
+            break;
     }
     fprintf(stream, "%s", string);
 }
-*/
+
             
 
 

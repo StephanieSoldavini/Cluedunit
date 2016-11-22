@@ -21,8 +21,10 @@ int main(int argc, char *argv[])
     goTo(stdout, 5, 5, 0);
     printf("hi");
     goTo(stdout, 10, 15, 0);
+    changeTextColor(stdout, RED);
     printf("lol");
     goTo(stdout, 50, 0, 1);
+    changeTextColor(stdout, WHITE);
     /*
     locationToString(&room, buffer, sizeof(buffer));
     printf("%s: %s\n", room.room, buffer);
