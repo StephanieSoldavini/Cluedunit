@@ -8,7 +8,7 @@ CC = clang
 CFLAGS = -MMD -g -Wall -pedantic -ansi -I$(SRCDIR) -I$(INCDIR)
 
 PROG = $(PROGDIR)out
-SRC = location.c main.c 
+SRC = location.c ascii.c main.c 
 OBJ = $(patsubst %.c,$(BUILDDIR)%.o,$(SRC))
 DEP = $(patsubst %.c,$(BUILDDIR)%.d,$(SRC))
 
