@@ -6,8 +6,8 @@
 
 int main(int argc, char *argv[])
 {
-    int i;
-    char buffer[256];
+    int c;
+    location const *playerLoc = &PlumHome;
     /*
     const location room = Ballroom;
     */
@@ -18,13 +18,7 @@ int main(int argc, char *argv[])
         printBoard(stdout, boardf);
     }
     fclose(boardf);
-    goTo(stdout, 5, 5, 0);
-    printf("hi");
-    goTo(stdout, 10, 15, 0);
-    changeTextColor(stdout, RED);
-    printf("lol");
     goTo(stdout, 50, 0, 1);
-    changeTextColor(stdout, WHITE);
     /*
     locationToString(&room, buffer, sizeof(buffer));
     printf("%s: %s\n", room.room, buffer);
@@ -33,5 +27,34 @@ int main(int argc, char *argv[])
         printf("%s D%d: %s\n", room.room, i, buffer);
     }
     */
+    system("/bin/stty raw");
+    /*
+    int i = 0;
+    fgets(buffer, sizeof(buffer), stdin);
+    */
+    do {
+        goTo(stdout, playerLoc->row, playerLoc->col, 0);
+        fprintf(stdout, "x");
+        goTo(stdout, 50, 0, 1);
+        c = getchar();
+        switch (c) {
+            case 'w':
+                playerLoc = move(playerLoc, DEC_ROW);
+                break;
+            case 'a':
+                playerLoc = move(playerLoc, DEC_COL);
+                break;
+            case 's':
+                playerLoc = move(playerLoc, INC_ROW);
+                break;
+            case 'd':
+                playerLoc = move(playerLoc, INC_COL);
+                break;
+        }
+    } while (c != 'q');
+    goTo(stdout, playerLoc->row, playerLoc->col, 0);
+    fprintf(stdout, "Pl");
+    goTo(stdout, 50, 0, 1);
+    system("/bin/stty cooked");
     return 0;
 }

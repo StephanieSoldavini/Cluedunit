@@ -49,6 +49,7 @@ void changeTextColor(FILE *stream, color fontColor)
         case WHITE:
             snprintf(string, sizeof(string), "\33[0;37m");
             break;
+        case DEFAULT:
         default:
             snprintf(string, sizeof(string), "\33[0m");
             break;

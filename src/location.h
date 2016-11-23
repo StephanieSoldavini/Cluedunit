@@ -12,8 +12,8 @@ typedef struct room {
 
 typedef struct location {
     const char *room;
-    int col;
     int row;
+    int col;
     const struct location *adj[4];
 } location;
 

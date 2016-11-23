@@ -38,5 +38,5 @@ const location* move( const location *loc, direction dir )
             }
         }
     }
-    return NULL;
+    return loc;
 }

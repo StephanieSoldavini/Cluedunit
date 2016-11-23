@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-typedef enum {RED, GREEN, YELLOW, BLUE, PURPLE, WHITE} color;
+typedef enum {RED, GREEN, YELLOW, BLUE, PURPLE, WHITE, DEFAULT} color;
 
 void printBoard(FILE *outStream, FILE *inFile);
 void goTo(FILE *stream, int row, int col, int ascii);
