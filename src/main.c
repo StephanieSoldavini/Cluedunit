@@ -37,20 +37,7 @@ int main(int argc, char *argv[])
         fprintf(stdout, "x");
         goTo(stdout, 50, 0, 1);
         c = getchar();
-        switch (c) {
-            case 'w':
-                playerLoc = move(playerLoc, DEC_ROW);
-                break;
-            case 'a':
-                playerLoc = move(playerLoc, DEC_COL);
-                break;
-            case 's':
-                playerLoc = move(playerLoc, INC_ROW);
-                break;
-            case 'd':
-                playerLoc = move(playerLoc, INC_COL);
-                break;
-        }
+        playerLoc = move(playerLoc, inputToDirection(c));
     } while (c != 'q');
     goTo(stdout, playerLoc->row, playerLoc->col, 0);
     fprintf(stdout, "Pl");

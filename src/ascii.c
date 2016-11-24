@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "ascii.h"
+#include "location.h"
 
 void printBoard(FILE *outStream, FILE *inFile)
 {
@@ -57,6 +58,24 @@ void changeTextColor(FILE *stream, color fontColor)
     fprintf(stream, "%s", string);
 }
 
-            
+direction inputToDirection(int c)
+{
+    direction dir;
+    switch (c) {
+        case 'w':
+            dir = DEC_ROW;
+            break;
+        case 'a':
+            dir = DEC_COL;
+            break;
+        case 's':
+            dir = INC_ROW;
+            break;
+        case 'd':
+            dir = INC_COL;
+            break;
+    }
+    return dir;
+}
 
 
