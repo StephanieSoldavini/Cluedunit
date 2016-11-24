@@ -20,4 +20,4 @@ typedef struct location {
 void locationToString( const location *loc, char *buffer, unsigned int buffLen );
 const location* move( const location *loc, direction dir );
 
-#endif
+#endif /* __LOCATION_H__ */

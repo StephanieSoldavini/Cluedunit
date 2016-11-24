@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include "location.h"
 
+/* Converts a location variable to a string location
+ * loc: location to be converted
+ * buffer: string output
+ * buffLen: length of buffer
+ */
 void locationToString( const location *loc, char *buffer, unsigned int buffLen )
 {
     if (loc == NULL) {
@@ -12,6 +17,11 @@ void locationToString( const location *loc, char *buffer, unsigned int buffLen )
     }
 }
 
+/* Based on the current location and a direction, calculate a new location
+ * loc: current location
+ * dir; Direction to move
+ * returns: Updated location
+ */
 const location* move( const location *loc, direction dir )
 {
     int searchCol = loc->col;
