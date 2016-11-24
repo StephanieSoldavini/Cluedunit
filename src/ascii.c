@@ -2,6 +2,10 @@
 #include "ascii.h"
 #include "location.h"
 
+/* Transfer data from one buffer to another
+ * outstream: outgoing buffer, usually stdout
+ * inFile: incoming text, usually the board file
+ */
 void printBoard(FILE *outStream, FILE *inFile)
 {
     char buffer[256];
@@ -10,6 +14,12 @@ void printBoard(FILE *outStream, FILE *inFile)
     }
 }
 
+/* Move the cursor to the designated location
+ * stream: buffer to move the cursor in
+ * row: y axis
+ * col: x axis
+ * ascii: 0 for board coords, 1 if conversion required
+ */
 void goTo(FILE *stream, int row, int col, int ascii)
 {
     int r, c;
@@ -23,11 +33,19 @@ void goTo(FILE *stream, int row, int col, int ascii)
     fprintf(stream, "\33[%d;%dH", r, c);
 }
 
+/* Clears from the current location of the cursor to the end of the stream
+ * stream: buffer to be cleared
+ */
 void clearToEnd(FILE *stream)
 {
     fprintf(stream, "\33[J");
 }
 
+/* Print the ANSI color codes to change the text color
+ * Color will remain changed until updates are made
+ * stream: buffer to update color in
+ * fontColor: the desired color. See header file for enum values
+ */
 void changeTextColor(FILE *stream, color fontColor)
 {
     char string[10];
@@ -77,4 +95,3 @@ direction inputToDirection(int c)
     }
     return dir;
 }
-

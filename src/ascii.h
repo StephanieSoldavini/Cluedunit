@@ -12,4 +12,4 @@ void clearToEnd(FILE *stream);
 void changeTextColor(FILE *stream, color fontColor);
 direction inputToDirection(int c);
 
-#endif
+#endif /* __ASCII_H__ */
