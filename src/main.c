@@ -1,47 +1,56 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #include "location.h"
 #include "boardGraph.h"
 #include "ascii.h"
+
+#define OUTSTREAM stdout
+
+void init()
+{
+    /* Print out board */
+    FILE *boardf = fopen("data/board.txt", "r");
+    if (boardf == NULL) {
+        printf("Error\n");
+    } else {
+        printBoard(OUTSTREAM, boardf);
+    }
+    fclose(boardf);
+
+    /* Seed random number generator */
+    srand(time(NULL));
+
+    /* Turn of terminal I/O processing */
+    system("/bin/stty raw");
+}
+
+void cleanup()
+{
+    system("/bin/stty cooked");
+}
 
 int main(int argc, char *argv[])
 {
     int c;
     location const *playerLoc = &PlumHome;
-    /*
-    const location room = Ballroom;
-    */
-    FILE *boardf = fopen("data/board.txt", "r");
-    if (boardf == NULL) {
-        printf("Error\n");
-    } else {
-        printBoard(stdout, boardf);
-    }
-    fclose(boardf);
-    goTo(stdout, 50, 0, 1);
-    /*
-    locationToString(&room, buffer, sizeof(buffer));
-    printf("%s: %s\n", room.room, buffer);
-    for (i = 0; i < 4; i ++) {
-        locationToString(room.adj[i], buffer, sizeof(buffer));
-        printf("%s D%d: %s\n", room.room, i, buffer);
-    }
-    */
-    system("/bin/stty raw");
-    /*
-    int i = 0;
-    fgets(buffer, sizeof(buffer), stdin);
-    */
+    init();
+    goTo(OUTSTREAM, 50, 0, 1);
     do {
-        goTo(stdout, playerLoc->row, playerLoc->col, 0);
-        fprintf(stdout, "x");
-        goTo(stdout, 50, 0, 1);
-        c = getchar();
-        playerLoc = move(playerLoc, inputToDirection(c));
+        int diceRoll = (rand() % 6) + 1;
+        goTo(OUTSTREAM, 50, 0, 1);
+        fprintf(OUTSTREAM, "You rolled a %d.", diceRoll);
+        do {
+            goTo(OUTSTREAM, playerLoc->row, playerLoc->col, 0);
+            fprintf(OUTSTREAM, "x");
+            c = getchar();
+            playerLoc = move(playerLoc, inputToDirection(c));
+            diceRoll--;
+        } while (diceRoll > 0 || c != 'q');
+        goTo(OUTSTREAM, playerLoc->row, playerLoc->col, 0);
+        fprintf(OUTSTREAM, "Pl");
     } while (c != 'q');
-    goTo(stdout, playerLoc->row, playerLoc->col, 0);
-    fprintf(stdout, "Pl");
-    goTo(stdout, 50, 0, 1);
-    system("/bin/stty cooked");
+    goTo(OUTSTREAM, 50, 0, 1);
+    cleanup();
     return 0;
 }

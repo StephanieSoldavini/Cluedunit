@@ -78,4 +78,3 @@ direction inputToDirection(int c)
     return dir;
 }
 
-
