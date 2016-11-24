@@ -3,9 +3,15 @@ PROGDIR = bin/
 INCDIR = include/
 BUILDDIR = build/
 
+OS = $(shell uname)
+
 VPATH = $(SRCDIR)
 CC = clang
 CFLAGS = -MMD -g -Wall -pedantic -ansi -I$(SRCDIR) -I$(INCDIR)
+
+ifeq ($(OS),Linux)
+	CFLAGS += -D_XOPEN_SOURCE=500
+endif
 
 PROG = $(PROGDIR)out
 SRC = location.c ascii.c main.c 
