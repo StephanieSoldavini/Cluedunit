@@ -24,7 +24,7 @@ void init()
     srand(time(NULL));
 
     /* Turn of terminal I/O processing */
-    system("/bin/stty raw");
+    system("/bin/stty raw -echo");
 
     printToHomeRow(OUTSTREAM, "Welcome to CLUE. Press a key to continue.");
     getchar();
@@ -33,7 +33,7 @@ void init()
 void cleanup()
 {
     goToHomeRow(OUTSTREAM);
-    system("/bin/stty cooked");
+    system("/bin/stty cooked echo");
 }
 
 int main(int argc, char *argv[])
