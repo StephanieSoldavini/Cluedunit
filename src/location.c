@@ -19,7 +19,7 @@ void locationToString( const location *loc, char *buffer, unsigned int buffLen )
 
 /* Based on the current location and a direction, calculate a new location
  * loc: current location
- * dir; Direction to move
+ * dir: Direction to move
  * returns: Updated location
  */
 const location* move( const location *loc, direction dir )
@@ -39,6 +39,9 @@ const location* move( const location *loc, direction dir )
             break;
         case DEC_ROW:
             searchRow--;
+            break;
+        case STAY:
+        default:
             break;
     }
     for (i = 0; i < 4; i++) {

@@ -23,10 +23,14 @@ void init()
 
     /* Turn of terminal I/O processing */
     system("/bin/stty raw");
+
+    printToHomeRow(OUTSTREAM, "Welcome to CLUE. Press a key to continue.");
+    getchar();
 }
 
 void cleanup()
 {
+    goToHomeRow(OUTSTREAM);
     system("/bin/stty cooked");
 }
 
@@ -35,22 +39,17 @@ int main(int argc, char *argv[])
     int c;
     location const *playerLoc = &PlumHome;
     init();
-    goTo(OUTSTREAM, 50, 0, 1);
     do {
         int diceRoll = (rand() % 6) + 1;
-        goTo(OUTSTREAM, 50, 0, 1);
-        fprintf(OUTSTREAM, "You rolled a %d.", diceRoll);
+        printToHomeRow(OUTSTREAM, "You rolled a %d.", diceRoll);
         do {
-            goTo(OUTSTREAM, playerLoc->row, playerLoc->col, 0);
-            fprintf(OUTSTREAM, "x");
+            printToTile(OUTSTREAM, playerLoc->row, playerLoc->col, "Pl");
             c = getchar();
+            printToTile(OUTSTREAM, playerLoc->row, playerLoc->col, "x ");
             playerLoc = move(playerLoc, inputToDirection(c));
             diceRoll--;
-        } while (diceRoll > 0 || c != 'q');
-        goTo(OUTSTREAM, playerLoc->row, playerLoc->col, 0);
-        fprintf(OUTSTREAM, "Pl");
+        } while (diceRoll > 0 && c != 'q');
     } while (c != 'q');
-    goTo(OUTSTREAM, 50, 0, 1);
     cleanup();
     return 0;
 }
