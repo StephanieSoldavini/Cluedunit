@@ -25,6 +25,7 @@ void init()
 
     /* Turn of terminal I/O processing */
     system("/bin/stty raw -echo");
+    CURSOR_OFF(OUTSTREAM);
 
     printToHomeRow(OUTSTREAM, "Welcome to CLUE. Press a key to continue.");
     getchar();
@@ -33,6 +34,7 @@ void init()
 void cleanup()
 {
     goToHomeRow(OUTSTREAM);
+    CURSOR_ON(OUTSTREAM);
     system("/bin/stty cooked echo");
 }
 

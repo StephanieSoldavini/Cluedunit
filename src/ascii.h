@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include "location.h"
 
+#define CURSOR_ON(stream) fprintf(stream, "\33[?25h")
+#define CURSOR_OFF(stream) fprintf(stream, "\33[?25l")
+
 typedef enum {RED, GREEN, YELLOW, BLUE, PURPLE, WHITE, DEFAULT} color;
 
 void printBoard(FILE *outStream, FILE *inFile);
