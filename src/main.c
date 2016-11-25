@@ -15,6 +15,8 @@ void init()
     if (boardf == NULL) {
         printf("Error\n");
     } else {
+        fprintf(OUTSTREAM, "Welcome to CLUE.\nCopyright (C) 2016  Stephanie Soldavini and Andrew Ramsey\nThis program comes with ABSOLUTELY NO WARRANTY;\nThis is free software, and you are welcome to redistribute it\nunder certain conditions; See LICENSE for details\nPress enter to continue.");
+        getchar();
         system("clear");
         printBoard(OUTSTREAM, boardf);
     }
@@ -26,9 +28,6 @@ void init()
     /* Turn of terminal I/O processing */
     system("/bin/stty raw -echo");
     CURSOR_OFF(OUTSTREAM);
-
-    printToHomeRow(OUTSTREAM, "Welcome to CLUE. Press a key to continue.");
-    getchar();
 }
 
 void cleanup()
