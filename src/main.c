@@ -7,16 +7,25 @@
 #include "player.h"
 
 #define OUTSTREAM stdout
+#define INSTREAM stdin
 
 void init()
 {
-    /* Print out board */
     FILE *boardf = fopen("data/board.txt", "r");
+
+    system("clear");
+    fprintf(OUTSTREAM, "Welcome to CLUE.\n"
+            "Copyright (C) 2016  Stephanie Soldavini and Andrew Ramsey\n"
+            "This program comes with ABSOLUTELY NO WARRANTY;\n"
+            "This is free software, and you are welcome to redistribute it\n"
+            "under certain conditions; See LICENSE for details\n"
+            "Press enter to continue.");
+    getchar();
+
+    /* Print out board */
     if (boardf == NULL) {
         printf("Error\n");
     } else {
-        fprintf(OUTSTREAM, "Welcome to CLUE.\nCopyright (C) 2016  Stephanie Soldavini and Andrew Ramsey\nThis program comes with ABSOLUTELY NO WARRANTY;\nThis is free software, and you are welcome to redistribute it\nunder certain conditions; See LICENSE for details\nPress enter to continue.");
-        getchar();
         system("clear");
         printBoard(OUTSTREAM, boardf);
     }
@@ -26,22 +35,37 @@ void init()
     srand(time(NULL));
 
     /* Turn of terminal I/O processing */
-    system("/bin/stty raw -echo");
+    ECHO_OFF;
     CURSOR_OFF(OUTSTREAM);
 }
 
 void cleanup()
 {
+    /* Go to home row so new prompt doesn't print in the middle of the board */
     goToHomeRow(OUTSTREAM);
+
+    /* Turn on terminal I/O processing */
     CURSOR_ON(OUTSTREAM);
-    system("/bin/stty cooked echo");
+    ECHO_ON;
 }
 
 int main(int argc, char *argv[])
 {
     int c;
     player *plum = newPlayer("Plum", PlumHome, PURPLE);
+    int numHumans;
     init();
+
+    /* Choose players */
+    printToHomeRow(OUTSTREAM, "How many human players are there? ");
+    ECHO_ON;
+    CURSOR_ON(OUTSTREAM);
+    fscanf(INSTREAM, "%d", &numHumans);
+    printToHomeRow(OUTSTREAM, "There are %d human players.", numHumans);
+    getchar();
+    CURSOR_OFF(OUTSTREAM);
+    ECHO_OFF;
+        
     do {
         int diceRoll = (rand() % 6) + 1;
         printToHomeRow(OUTSTREAM, "You rolled a %d.", diceRoll);

@@ -6,6 +6,8 @@
 
 #define CURSOR_ON(stream) fprintf(stream, "\33[?25h")
 #define CURSOR_OFF(stream) fprintf(stream, "\33[?25l")
+#define ECHO_OFF system("/bin/stty raw -echo")
+#define ECHO_ON system("/bin/stty cooked echo")
 
 typedef enum {RED, GREEN, YELLOW, BLUE, PURPLE, WHITE, DEFAULT} color;
 
