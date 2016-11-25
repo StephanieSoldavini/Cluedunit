@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdarg.h>
 #include "ascii.h"
 #include "location.h"
 
@@ -92,6 +93,35 @@ direction inputToDirection(int c)
         case 'd':
             dir = INC_COL;
             break;
+        default:
+            dir = STAY;
+            break;
     }
     return dir;
 }
+
+void goToHomeRow(FILE *stream)
+{
+    goTo(stream, 50, 0, 1);
+}
+
+
+void printToHomeRow(FILE *stream, const char *fmt, ...)
+{
+    va_list args;
+    va_start(args, fmt);
+    goToHomeRow(stream);
+    clearToEnd(stream);
+    vfprintf(stream, fmt, args);
+    va_end(args);
+}
+
+void printToTile(FILE *stream, int row, int col, const char *fmt, ...)
+{
+    va_list args;
+    va_start(args, fmt);
+    goTo(stream, row, col, 0);
+    vfprintf(stream, fmt, args);
+    va_end(args);
+}
+
