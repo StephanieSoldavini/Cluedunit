@@ -21,6 +21,7 @@ void locationToString( const location *loc, char *buffer, unsigned int buffLen )
  * loc: current location
  * dir; Direction to move
  * returns: Updated location
+ * TODO: Just change the pointer instead of returning a new one
  */
 const location* move( const location *loc, direction dir )
 {

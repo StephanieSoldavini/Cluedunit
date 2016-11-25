@@ -4,6 +4,7 @@
 #include "location.h"
 #include "boardGraph.h"
 #include "ascii.h"
+#include "player.h"
 
 #define OUTSTREAM stdout
 
@@ -14,6 +15,7 @@ void init()
     if (boardf == NULL) {
         printf("Error\n");
     } else {
+        system("clear");
         printBoard(OUTSTREAM, boardf);
     }
     fclose(boardf);
@@ -33,7 +35,7 @@ void cleanup()
 int main(int argc, char *argv[])
 {
     int c;
-    location const *playerLoc = &PlumHome;
+    player *plum = newPlayer("Plum", PlumHome, PURPLE);
     init();
     goTo(OUTSTREAM, 50, 0, 1);
     do {
@@ -41,16 +43,17 @@ int main(int argc, char *argv[])
         goTo(OUTSTREAM, 50, 0, 1);
         fprintf(OUTSTREAM, "You rolled a %d.", diceRoll);
         do {
-            goTo(OUTSTREAM, playerLoc->row, playerLoc->col, 0);
+            goTo(OUTSTREAM, plum->loc.row, plum->loc.col, 0);
             fprintf(OUTSTREAM, "x");
             c = getchar();
-            playerLoc = move(playerLoc, inputToDirection(c));
+            plum->loc = *(move(&plum->loc, inputToDirection(c)));
             diceRoll--;
         } while (diceRoll > 0 || c != 'q');
-        goTo(OUTSTREAM, playerLoc->row, playerLoc->col, 0);
+        goTo(OUTSTREAM, plum->loc.row, plum->loc.col, 0);
         fprintf(OUTSTREAM, "Pl");
     } while (c != 'q');
     goTo(OUTSTREAM, 50, 0, 1);
     cleanup();
+    deletePlayer(plum);
     return 0;
 }
