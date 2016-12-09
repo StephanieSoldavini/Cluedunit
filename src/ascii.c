@@ -61,7 +61,7 @@ void changeTextColor(FILE *stream, color fontColor)
             snprintf(string, sizeof(string), "\33[0;33m");
             break;
         case BLUE:
-            snprintf(string, sizeof(string), "\33[1;35m");
+            snprintf(string, sizeof(string), "\33[1;34m");
             break;
         case PURPLE:
             snprintf(string, sizeof(string), "\33[0;35m");
