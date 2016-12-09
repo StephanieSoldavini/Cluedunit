@@ -1,10 +1,9 @@
 #ifndef __LOCATION_H__
 #define __LOCATION_H__
 
-#include <stdlib.h>
-#include <stdio.h>
+struct player; /* Forward declare player struct for header */
 
-typedef enum {INC_COL, DEC_COL, INC_ROW, DEC_ROW, STAY} direction; 
+typedef enum {INC_COL, DEC_COL, INC_ROW, DEC_ROW, BACK, STAY} direction; 
 
 typedef struct room {
     char *name;
@@ -18,6 +17,6 @@ typedef struct location {
 } location;
 
 void locationToString( const location *loc, char *buffer, unsigned int buffLen );
-const location* move( const location *loc, direction dir );
+void move( struct player *movingPlayer, direction dir );
 
 #endif /* __LOCATION_H__ */

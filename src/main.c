@@ -52,7 +52,7 @@ void cleanup()
 int main(int argc, char *argv[])
 {
     int c;
-    player *plum = newPlayer("Plum", PlumHome, PURPLE);
+    player *plum = newPlayer("Plum", &PlumHome, PURPLE);
     int numHumans;
     init();
 
@@ -67,15 +67,14 @@ int main(int argc, char *argv[])
     ECHO_OFF;
         
     do {
-        int diceRoll = (rand() % 6) + 1;
-        printToHomeRow(OUTSTREAM, "You rolled a %d.", diceRoll);
+        roll(plum);
         do {
-            printToTile(OUTSTREAM, plum->loc.row, plum->loc.col, "Pl");
+            printToHomeRow(OUTSTREAM, "You rolled a %d and have %d move(s) left", plum->roll, plum->roll-movesMade(plum));
+            printToTile(OUTSTREAM, plum->loc->row, plum->loc->col, "Pl");
             c = getchar();
-            printToTile(OUTSTREAM, plum->loc.row, plum->loc.col, "x ");
-            plum->loc = *(move(&plum->loc, inputToDirection(c)));
-            diceRoll--;
-        } while (diceRoll > 0 && c != 'q');
+            printToTile(OUTSTREAM, plum->loc->row, plum->loc->col, "x ");
+            move(plum, inputToDirection(c));
+        } while (movesMade(plum) < plum->roll && c != 'q');
     } while (c != 'q');
     cleanup();
     deletePlayer(plum);

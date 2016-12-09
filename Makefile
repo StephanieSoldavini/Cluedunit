@@ -14,7 +14,7 @@ ifeq ($(OS),Linux)
 endif
 
 PROG = $(PROGDIR)out
-SRC = location.c ascii.c main.c player.c
+SRC = location.c ascii.c main.c player.c llist.c
 OBJ = $(patsubst %.c,$(BUILDDIR)%.o,$(SRC))
 DEP = $(patsubst %.c,$(BUILDDIR)%.d,$(SRC))
 
