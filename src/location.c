@@ -22,8 +22,9 @@ void locationToString( const location *loc, char *buffer, unsigned int buffLen )
 /* Based on the current location and a direction, calculate a new location
  * movingPlayer: Person who is moving
  * dir: Direction to move
+ * returns: Direction player moved in
  */
-void move( player *movingPlayer, direction dir )
+direction move( player *movingPlayer, direction dir )
 {
     const location *loc = movingPlayer->loc;
     int searchCol = loc->col;
@@ -36,7 +37,7 @@ void move( player *movingPlayer, direction dir )
         /* If they want to go backwards TODO: Combine with above */
        if (dir == peekAtLinkedList(&movingPlayer->locHistory)->backwards || dir == BACK) {
            movingPlayer->loc = removeFromLinkedList(&movingPlayer->locHistory)->loc;
-           return; /* Don't do anything else */
+           return BACK; /* Don't do anything else */
        } 
     }
     switch (dir) {
@@ -68,9 +69,23 @@ void move( player *movingPlayer, direction dir )
                 historyNode.backwards = backwards;
                 movingPlayer->loc = loc->adj[i];
                 addToLinkedList(&movingPlayer->locHistory, &historyNode);
-                break;
+                return dir;
             }
         }
     }
+    return STAY;
 }
 
+/* Where was the player last. Note that this is destructive to locHistory
+ * movingPlayer: player of interest
+ * returns: players previous location, or NULL if that doesn't exist 
+ */
+const location *getPrevLoc(struct player *movingPlayer)
+{
+    elementStructs *prevLoc = removeFromLinkedList(&movingPlayer->locHistory);
+    if (NULL != prevLoc) {
+        return prevLoc->loc;
+    } else {
+        return NULL;
+    }
+}

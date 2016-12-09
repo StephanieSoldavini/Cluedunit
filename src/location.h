@@ -17,6 +17,7 @@ typedef struct location {
 } location;
 
 void locationToString( const location *loc, char *buffer, unsigned int buffLen );
-void move( struct player *movingPlayer, direction dir );
+direction move( struct player *movingPlayer, direction dir );
+const location *getPrevLoc(struct player *movingPlayer);
 
 #endif /* __LOCATION_H__ */

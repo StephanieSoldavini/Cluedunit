@@ -128,3 +128,54 @@ void printToTile(FILE *stream, int row, int col, const char *fmt, ...)
     va_end(args);
 }
 
+void takeTurn(player *movingPlayer)
+{
+    int c;
+    direction d;
+    const location *prevLoc;
+    roll(movingPlayer);
+    do {
+        printToHomeRow(OUTSTREAM, "You rolled a %d and have %d move(s) left", 
+                movingPlayer->roll, movingPlayer->roll-movesMade(movingPlayer));
+        c = getchar();
+        prevLoc = movingPlayer->loc;
+        d = move(movingPlayer, inputToDirection(c));
+        if (BACK == d) {
+            /* TODO: Missing edge case where prev path crosses itself */
+            printToTile(OUTSTREAM, prevLoc->row, prevLoc->col, "  ");
+        } else {
+            printToTile(OUTSTREAM, prevLoc->row, prevLoc->col, "x ");
+        }
+        printToTile(OUTSTREAM, movingPlayer->loc->row, movingPlayer->loc->col, "Pl");
+        /* TODO: Ask for confirmation, remove x's */
+    } while (movesMade(movingPlayer) < movingPlayer->roll && c != 'q');
+    while (NULL != (prevLoc = getPrevLoc(movingPlayer))) {
+        printToTile(OUTSTREAM, prevLoc->row, prevLoc->col, "  ");
+    }
+
+
+}
+
+/* Puts each player in their starting location on the board
+ * TODO: This should take a list of players, not hardcoded for Plum
+ */
+void placePlayers(player *newPlayer)
+{
+    printToTile(OUTSTREAM, newPlayer->loc->row, newPlayer->loc->col, "Pl");
+}
+
+
+/* Converts a player's response into an integer for parsing.
+ * Limited to one character or a number of any digits (smaller than int)
+ * returns: int representation of response
+ */
+int getPlayerInput()
+{
+    int retval;
+    ECHO_ON;
+    CURSOR_ON(OUTSTREAM);
+    fscanf(INSTREAM, "%d", &retval);
+    CURSOR_OFF(OUTSTREAM);
+    ECHO_OFF;
+    return retval;
+}

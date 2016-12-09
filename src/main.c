@@ -6,16 +6,13 @@
 #include "ascii.h"
 #include "player.h"
 
-#define OUTSTREAM stdout
-#define INSTREAM stdin
-
 void init()
 {
     FILE *boardf = fopen("data/board.txt", "r");
 
     system("clear");
     fprintf(OUTSTREAM, "Welcome to CLUE.\n"
-            "Copyright (C) 2016  Stephanie Soldavini and Andrew Ramsey\n"
+            "Copyright (C) 2016 Stephanie Soldavini and Andrew Ramsey\n"
             "This program comes with ABSOLUTELY NO WARRANTY;\n"
             "This is free software, and you are welcome to redistribute it\n"
             "under certain conditions; See LICENSE for details\n"
@@ -58,23 +55,15 @@ int main(int argc, char *argv[])
 
     /* Choose players */
     printToHomeRow(OUTSTREAM, "How many human players are there? ");
-    ECHO_ON;
-    CURSOR_ON(OUTSTREAM);
-    fscanf(INSTREAM, "%d", &numHumans);
+    numHumans = getPlayerInput();
     printToHomeRow(OUTSTREAM, "There are %d human players.", numHumans);
     getchar();
-    CURSOR_OFF(OUTSTREAM);
-    ECHO_OFF;
+    placePlayers(plum);
         
     do {
-        roll(plum);
-        do {
-            printToHomeRow(OUTSTREAM, "You rolled a %d and have %d move(s) left", plum->roll, plum->roll-movesMade(plum));
-            printToTile(OUTSTREAM, plum->loc->row, plum->loc->col, "Pl");
-            c = getchar();
-            printToTile(OUTSTREAM, plum->loc->row, plum->loc->col, "x ");
-            move(plum, inputToDirection(c));
-        } while (movesMade(plum) < plum->roll && c != 'q');
+        takeTurn(plum);
+        printToHomeRow(OUTSTREAM, "Turn finished. Press q to quit or another key to continue. ");
+        c = getchar();
     } while (c != 'q');
     cleanup();
     deletePlayer(plum);
