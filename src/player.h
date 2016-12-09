@@ -6,12 +6,14 @@
 
 #define MAX_ROLL 6
 #define MAX_NAME 8 /* Peacock + 1 */
+#define MAX_ABBR 3 /* Pl, Wh, etc + 1*/
 
 
 typedef enum {RED, GREEN, YELLOW, BLUE, PURPLE, WHITE, DEFAULT} color;
 
 typedef struct player {
     char name[MAX_NAME];
+    char abbr[MAX_ABBR];
     const location *loc;
     linkedLists locHistory;
     struct card *heldCards;

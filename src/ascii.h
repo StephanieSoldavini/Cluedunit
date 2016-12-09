@@ -22,7 +22,7 @@ void changeTextColor(FILE *stream, color fontColor);
 direction inputToDirection(int c);
 void goToHomeRow(FILE *stream);
 void printToHomeRow(FILE *stream, const char *fmt, ...);
-void printToTile(FILE *stream, int row, int col, const char *fmt, ...);
+void printToTile(FILE *stream, color fontColor, int row, int col, const char *fmt, ...);
 void takeTurn(player *movingPlayer);
 void placePlayers(player *newPlayer);
 int getPlayerInput();

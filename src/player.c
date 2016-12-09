@@ -16,6 +16,9 @@ player *newPlayer(char *name, const location *home, color playerColor)
     else {
         strncpy(newPlayer->name, name, MAX_NAME);
     }
+
+    strncpy(newPlayer->abbr, name, MAX_ABBR);
+    newPlayer->abbr[MAX_ABBR-1] = '\0'; /* Want to make it a C string */
     newPlayer->loc = home;
     initLinkedList(&newPlayer->locHistory);
     newPlayer->playerColor = playerColor;

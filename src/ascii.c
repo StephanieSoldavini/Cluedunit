@@ -119,12 +119,14 @@ void printToHomeRow(FILE *stream, const char *fmt, ...)
     va_end(args);
 }
 
-void printToTile(FILE *stream, int row, int col, const char *fmt, ...)
+void printToTile(FILE *stream, color fontColor, int row, int col, const char *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
     goTo(stream, row, col, 0);
+    changeTextColor(stream, fontColor);
     vfprintf(stream, fmt, args);
+    changeTextColor(stream, WHITE);
     va_end(args);
 }
 
@@ -142,15 +144,16 @@ void takeTurn(player *movingPlayer)
         d = move(movingPlayer, inputToDirection(c));
         if (BACK == d) {
             /* TODO: Missing edge case where prev path crosses itself */
-            printToTile(OUTSTREAM, prevLoc->row, prevLoc->col, "  ");
+            printToTile(OUTSTREAM, WHITE, prevLoc->row, prevLoc->col, "  ");
         } else {
-            printToTile(OUTSTREAM, prevLoc->row, prevLoc->col, "x ");
+            printToTile(OUTSTREAM, movingPlayer->playerColor, prevLoc->row, prevLoc->col, "x ");
         }
-        printToTile(OUTSTREAM, movingPlayer->loc->row, movingPlayer->loc->col, "Pl");
-        /* TODO: Ask for confirmation, remove x's */
+        printToTile(OUTSTREAM, movingPlayer->playerColor, movingPlayer->loc->row,
+                movingPlayer->loc->col, movingPlayer->abbr);
+        /* TODO: Ask for confirmation */
     } while (movesMade(movingPlayer) < movingPlayer->roll && c != 'q');
     while (NULL != (prevLoc = getPrevLoc(movingPlayer))) {
-        printToTile(OUTSTREAM, prevLoc->row, prevLoc->col, "  ");
+        printToTile(OUTSTREAM, WHITE, prevLoc->row, prevLoc->col, "  ");
     }
 
 
@@ -161,7 +164,8 @@ void takeTurn(player *movingPlayer)
  */
 void placePlayers(player *newPlayer)
 {
-    printToTile(OUTSTREAM, newPlayer->loc->row, newPlayer->loc->col, "Pl");
+    printToTile(OUTSTREAM, newPlayer->playerColor, newPlayer->loc->row, 
+            newPlayer->loc->col, newPlayer->abbr);
 }
 
 
