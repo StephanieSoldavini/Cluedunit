@@ -40,6 +40,7 @@ void cleanup()
 {
     /* Go to home row so new prompt doesn't print in the middle of the board */
     goToHomeRow(OUTSTREAM);
+    clearToEnd(OUTSTREAM);
 
     /* Turn on terminal I/O processing */
     CURSOR_ON(OUTSTREAM);

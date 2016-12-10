@@ -10,6 +10,7 @@
 #define CURSOR_OFF(stream) fprintf(stream, "\33[?25l")
 #define ECHO_OFF system("/bin/stty raw -echo")
 #define ECHO_ON system("/bin/stty cooked echo")
+#define BACKSPACE 127
 
 #define OUTSTREAM stdout
 #define INSTREAM stdin

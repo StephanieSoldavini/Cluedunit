@@ -93,7 +93,7 @@ direction inputToDirection(int c)
         case 'd':
             dir = INC_COL;
             break;
-        case 127: /* TODO: Define backspace */
+        case BACKSPACE:
             dir = BACK;
             break;
         default:
