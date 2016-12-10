@@ -6,16 +6,13 @@
 #include "ascii.h"
 #include "player.h"
 
-#define OUTSTREAM stdout
-#define INSTREAM stdin
-
 void init()
 {
     FILE *boardf = fopen("data/board.txt", "r");
 
     system("clear");
     fprintf(OUTSTREAM, "Welcome to CLUE.\n"
-            "Copyright (C) 2016  Stephanie Soldavini and Andrew Ramsey\n"
+            "Copyright (C) 2016 Stephanie Soldavini and Andrew Ramsey\n"
             "This program comes with ABSOLUTELY NO WARRANTY;\n"
             "This is free software, and you are welcome to redistribute it\n"
             "under certain conditions; See LICENSE for details\n"
@@ -54,12 +51,12 @@ int main(int argc, char *argv[])
     int c;
     int numHumans;
     int i, j;
-    player *plum    = newPlayer("Prof. Plum",   PlumHome,       PURPLE);
-    player *peacock = newPlayer("Mrs. Peacock", PeacockHome,    BLUE);
-    player *scarlet = newPlayer("Miss Scarlet", ScarletHome,    RED);
-    player *mustard = newPlayer("Col. Mustard", MustardHome,    YELLOW);
-    player *green   = newPlayer("Mr. Green",    GreenHome,      GREEN);
-    player *white   = newPlayer("Mrs. White",   WhiteHome,      WHITE);
+    player *plum    = newPlayer("Prof. Plum",   &PlumHome,       PURPLE);
+    player *peacock = newPlayer("Mrs. Peacock", &PeacockHome,    BLUE);
+    player *scarlet = newPlayer("Miss Scarlet", &ScarletHome,    RED);
+    player *mustard = newPlayer("Col. Mustard", &MustardHome,    YELLOW);
+    player *green   = newPlayer("Mr. Green",    &GreenHome,      GREEN);
+    player *white   = newPlayer("Mrs. White",   &WhiteHome,      WHITE);
     player *players[6];
     players[0] = plum;
     players[1] = peacock;
@@ -70,8 +67,10 @@ int main(int argc, char *argv[])
     init();
 
     /* Choose players */
+    /*
     ECHO_ON;
     CURSOR_ON(OUTSTREAM);
+    
     printToHomeRow(OUTSTREAM, "How many human players are there? ");
     numHumans = getDigit();
     printToHomeRow(OUTSTREAM, "There are %d human players.", numHumans);
@@ -90,20 +89,21 @@ int main(int argc, char *argv[])
     numHumans = getDigit();
     printToHomeRow(OUTSTREAM, "There are %d computer players.", numHumans);
     getchar();
+    
 
     CURSOR_OFF(OUTSTREAM);
     ECHO_OFF;
+    printToHomeRow(OUTSTREAM, "How many human players are there? ");
+    numHumans = getPlayerInput();
+    printToHomeRow(OUTSTREAM, "There are %d human players.", numHumans);
+    getchar();
+    */
+    placePlayers(plum);
         
     do {
-        int diceRoll = (rand() % 6) + 1;
-        printToHomeRow(OUTSTREAM, "You rolled a %d.", diceRoll);
-        do {
-            printToTile(OUTSTREAM, plum->loc.row, plum->loc.col, "Pl");
-            c = getchar();
-            printToTile(OUTSTREAM, plum->loc.row, plum->loc.col, "x ");
-            plum->loc = *(move(&plum->loc, inputToDirection(c)));
-            diceRoll--;
-        } while (diceRoll > 0 && c != 'q');
+        takeTurn(plum);
+        printToHomeRow(OUTSTREAM, "Turn finished. Press q to quit or another key to continue. ");
+        c = getchar();
     } while (c != 'q');
     cleanup();
     deletePlayer(plum);

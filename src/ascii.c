@@ -61,7 +61,7 @@ void changeTextColor(FILE *stream, color fontColor)
             snprintf(string, sizeof(string), "\33[0;33m");
             break;
         case BLUE:
-            snprintf(string, sizeof(string), "\33[1;35m");
+            snprintf(string, sizeof(string), "\33[1;34m");
             break;
         case PURPLE:
             snprintf(string, sizeof(string), "\33[0;35m");
@@ -93,6 +93,9 @@ direction inputToDirection(int c)
         case 'd':
             dir = INC_COL;
             break;
+        case 127: /* TODO: Define backspace */
+            dir = BACK;
+            break;
         default:
             dir = STAY;
             break;
@@ -116,12 +119,14 @@ void printToHomeRow(FILE *stream, const char *fmt, ...)
     va_end(args);
 }
 
-void printToTile(FILE *stream, int row, int col, const char *fmt, ...)
+void printToTile(FILE *stream, color fontColor, int row, int col, const char *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
     goTo(stream, row, col, 0);
+    changeTextColor(stream, fontColor);
     vfprintf(stream, fmt, args);
+    changeTextColor(stream, WHITE);
     va_end(args);
 }
 
@@ -135,3 +140,56 @@ int getDigit()
 }
 
 
+void takeTurn(player *movingPlayer)
+{
+    int c;
+    direction d;
+    const location *prevLoc;
+    roll(movingPlayer);
+    do {
+        printToHomeRow(OUTSTREAM, "You rolled a %d and have %d move(s) left", 
+                movingPlayer->roll, movingPlayer->roll-movesMade(movingPlayer));
+        c = getchar();
+        prevLoc = movingPlayer->loc;
+        d = move(movingPlayer, inputToDirection(c));
+        if (BACK == d) {
+            /* TODO: Missing edge case where prev path crosses itself */
+            printToTile(OUTSTREAM, WHITE, prevLoc->row, prevLoc->col, "  ");
+        } else {
+            printToTile(OUTSTREAM, movingPlayer->playerColor, prevLoc->row, prevLoc->col, "x ");
+        }
+        printToTile(OUTSTREAM, movingPlayer->playerColor, movingPlayer->loc->row,
+                movingPlayer->loc->col, movingPlayer->abbr);
+        /* TODO: Ask for confirmation */
+    } while (movesMade(movingPlayer) < movingPlayer->roll && c != 'q');
+    while (NULL != (prevLoc = getPrevLoc(movingPlayer))) {
+        printToTile(OUTSTREAM, WHITE, prevLoc->row, prevLoc->col, "  ");
+    }
+
+
+}
+
+/* Puts each player in their starting location on the board
+ * TODO: This should take a list of players, not hardcoded for Plum
+ */
+void placePlayers(player *newPlayer)
+{
+    printToTile(OUTSTREAM, newPlayer->playerColor, newPlayer->loc->row, 
+            newPlayer->loc->col, newPlayer->abbr);
+}
+
+
+/* Converts a player's response into an integer for parsing.
+ * Limited to one character or a number of any digits (smaller than int)
+ * returns: int representation of response
+ */
+int getPlayerInput()
+{
+    int retval;
+    ECHO_ON;
+    CURSOR_ON(OUTSTREAM);
+    fscanf(INSTREAM, "%d", &retval);
+    CURSOR_OFF(OUTSTREAM);
+    ECHO_OFF;
+    return retval;
+}
