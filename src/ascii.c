@@ -125,3 +125,13 @@ void printToTile(FILE *stream, int row, int col, const char *fmt, ...)
     va_end(args);
 }
 
+int getDigit()
+{
+    int retval;
+    int c = getchar();
+    while (getchar() != '\n');
+    retval = c - '0';
+    return !(retval < 0 || retval > 9) ? retval : -1;
+}
+
+

@@ -52,17 +52,45 @@ void cleanup()
 int main(int argc, char *argv[])
 {
     int c;
-    player *plum = newPlayer("Plum", PlumHome, PURPLE);
     int numHumans;
+    int i, j;
+    player *plum    = newPlayer("Prof. Plum",   PlumHome,       PURPLE);
+    player *peacock = newPlayer("Mrs. Peacock", PeacockHome,    BLUE);
+    player *scarlet = newPlayer("Miss Scarlet", ScarletHome,    RED);
+    player *mustard = newPlayer("Col. Mustard", MustardHome,    YELLOW);
+    player *green   = newPlayer("Mr. Green",    GreenHome,      GREEN);
+    player *white   = newPlayer("Mrs. White",   WhiteHome,      WHITE);
+    player *players[6];
+    players[0] = plum;
+    players[1] = peacock;
+    players[2] = scarlet;
+    players[3] = mustard;
+    players[4] = green;
+    players[5] = white;
     init();
 
     /* Choose players */
-    printToHomeRow(OUTSTREAM, "How many human players are there? ");
     ECHO_ON;
     CURSOR_ON(OUTSTREAM);
-    fscanf(INSTREAM, "%d", &numHumans);
+    printToHomeRow(OUTSTREAM, "How many human players are there? ");
+    numHumans = getDigit();
     printToHomeRow(OUTSTREAM, "There are %d human players.", numHumans);
     getchar();
+
+    for (j = 0; j < numHumans; j--) {
+        printToHomeRow(OUTSTREAM, "Player %d, what character will you play?\n", j+1);
+        for (i = 0; i < 6; i++) {
+            fprintf(OUTSTREAM, "%d: %s\n", i, players[i]->name);
+        }
+        c = getDigit();
+
+    }
+
+    printToHomeRow(OUTSTREAM, "How many computer players are there? ");
+    numHumans = getDigit();
+    printToHomeRow(OUTSTREAM, "There are %d computer players.", numHumans);
+    getchar();
+
     CURSOR_OFF(OUTSTREAM);
     ECHO_OFF;
         

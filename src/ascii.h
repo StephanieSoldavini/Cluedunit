@@ -19,5 +19,6 @@ direction inputToDirection(int c);
 void goToHomeRow(FILE *stream);
 void printToHomeRow(FILE *stream, const char *fmt, ...);
 void printToTile(FILE *stream, int row, int col, const char *fmt, ...);
+int getDigit();
 
 #endif /* __ASCII_H__ */

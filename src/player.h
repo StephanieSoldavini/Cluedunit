@@ -6,7 +6,7 @@
 #include "ascii.h"
 
 #define MAX_ROLL 6
-#define MAX_NAME 8 /* Peacock + 1 */
+#define MAX_NAME 13 /* Peacock + 1 */
 
 typedef struct player {
     char name[MAX_NAME];
