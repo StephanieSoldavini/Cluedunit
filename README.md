@@ -1,4 +1,4 @@
-Clue
+Cluedunit
 ====
 
-A command line interface to play the game Clue.
+A command line interface to play the Parker Brother's game Clue.

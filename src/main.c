@@ -11,7 +11,7 @@ void init()
     FILE *boardf = fopen("data/board.txt", "r");
 
     system("clear");
-    fprintf(OUTSTREAM, "Welcome to CLUE.\n"
+    fprintf(OUTSTREAM, "Welcome to CLUEDUNIT.\n"
             "Copyright (C) 2016 Stephanie Soldavini and Andrew Ramsey\n"
             "This program comes with ABSOLUTELY NO WARRANTY;\n"
             "This is free software, and you are welcome to redistribute it\n"
