@@ -2,6 +2,7 @@ SRCDIR = src/
 PROGDIR = bin/
 INCDIR = include/
 BUILDDIR = build/
+DATDIR = data/
 
 OS = $(shell uname)
 
@@ -17,6 +18,7 @@ PROG = $(PROGDIR)out
 SRC = location.c ascii.c main.c player.c llist.c
 OBJ = $(patsubst %.c,$(BUILDDIR)%.o,$(SRC))
 DEP = $(patsubst %.c,$(BUILDDIR)%.d,$(SRC))
+DAT = $(patsubst %.txt,%.dat,$(wildcard $(DATDIR)*.txt))
 
 TEST = $(PROGDIR)test
 TESTSRC = test.c
@@ -40,6 +42,9 @@ $(TEST): $(TESTSRC) | $(PROGDIR)
 
 $(PYPRGOUT): $(PYPRG) | $(INCDIR)
 	$(PYTHON) $^
+
+$(DAT): #TODO generate these
+	xxd -i $< > $@
 
 $(SRCDIR):
 	mkdir -p $(SRCDIR)

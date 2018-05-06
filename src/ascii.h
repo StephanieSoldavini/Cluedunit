@@ -28,5 +28,6 @@ void printToTile(FILE *stream, color fontColor, int row, int col, const char *fm
 void takeTurn(player *movingPlayer);
 void placePlayers(player *newPlayer);
 int getPlayerInput();
+void printHeldCards(player *thePlayer, int numCardsEach);
 
 #endif /* __ASCII_H__ */

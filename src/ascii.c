@@ -2,6 +2,7 @@
 #include <stdarg.h>
 #include "ascii.h"
 #include "location.h"
+#include "../data/board.dat" 
 
 /* Transfer data from one buffer to another
  * outstream: outgoing buffer, usually stdout
@@ -9,10 +10,11 @@
  */
 void printBoard(FILE *outStream, FILE *inFile)
 {
-    char buffer[256];
-    while (fgets(buffer, sizeof(buffer), inFile)) {
-        fprintf(outStream, "%s", buffer);
-    }
+    fprintf(outStream, "%s", board_txt);
+    //char buffer[256];
+    //while (fgets(buffer, sizeof(buffer), inFile)) {
+    //    fprintf(outStream, "%s", buffer);
+    //}
 }
 
 /* Move the cursor to the designated location
@@ -20,8 +22,14 @@ void printBoard(FILE *outStream, FILE *inFile)
  * row: y axis
  * col: x axis
  * ascii: 0 for board coords, 1 if conversion required
+ *
+ * Assumes the board is made up of squares of this size:
+ * +----+
+ * |    |
+ * +----+
  */
 void goTo(FILE *stream, int row, int col, int ascii)
+
 {
     int r, c;
     if (ascii) {
@@ -147,8 +155,8 @@ void takeTurn(player *movingPlayer)
     const location *prevLoc;
     roll(movingPlayer);
     do {
-        printToHomeRow(OUTSTREAM, "You rolled a %d and have %d move(s) left", 
-                movingPlayer->roll, movingPlayer->roll-movesMade(movingPlayer));
+        printToHomeRow(OUTSTREAM, "%s: You rolled a %d and have %d move(s) left", 
+                movingPlayer->name, movingPlayer->roll, movingPlayer->roll-movesMade(movingPlayer));
         c = getchar();
         prevLoc = movingPlayer->loc;
         d = move(movingPlayer, inputToDirection(c));
@@ -192,4 +200,28 @@ int getPlayerInput()
     CURSOR_OFF(OUTSTREAM);
     ECHO_OFF;
     return retval;
+}
+
+void printHeldCards(player *thePlayer, int numCardsEach)
+{
+    int i;
+    int count = 0;
+    char fname[32]; /* TODO: make this a define */
+    char buffer[256];
+    FILE *cardf;
+    int colVal = 130;
+    for (i=0; i<numCardsEach; i++) {
+        if (i == 4) {
+            colVal = 150;
+            count = 0;
+        }
+        snprintf(fname, sizeof(fname), "data/%s.txt", thePlayer->heldCards[i]->name);
+        cardf = fopen(fname, "rb");
+        while (fgets(buffer, sizeof(buffer), cardf)) {
+            goTo(OUTSTREAM, count, colVal, 1);
+            fprintf(OUTSTREAM, "%s", buffer);
+            count++;
+        }
+        fclose(cardf);
+    }
 }

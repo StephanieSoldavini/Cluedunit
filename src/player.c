@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "player.h"
 
 /* Creates a new player. Call deletePlayer when finished
@@ -7,14 +8,15 @@
  * home: Where the player starts
  * returns: struct with details filled in. If name is empty, malloc failed
  */
-player *newPlayer(char *name, const location *home, color playerColor)
+player *newPlayer(char* prefix, char *name, const location *home, color playerColor)
 {
     player *newPlayer = malloc(sizeof(player));
     if (newPlayer == NULL) {
         strncpy(newPlayer->name, "", MAX_NAME);
     }
     else {
-        strncpy(newPlayer->name, name, MAX_NAME);
+        snprintf(newPlayer->name, MAX_NAME, "%s %s", prefix, name);
+        /*strncpy(newPlayer->name, name, MAX_NAME);*/
     }
 
     strncpy(newPlayer->abbr, name, MAX_ABBR);
@@ -22,7 +24,9 @@ player *newPlayer(char *name, const location *home, color playerColor)
     newPlayer->loc = home;
     initLinkedList(&newPlayer->locHistory);
     newPlayer->playerColor = playerColor;
-    newPlayer->heldCards = NULL;
+    newPlayer->playing = 0;
+    newPlayer->human = 0;
+    /* TODO newPlayer->heldCards = NULL; */
     return newPlayer;
 }
 
@@ -55,5 +59,8 @@ int roll(player *playerRolling)
 int movesMade(player *movingPlayer)
 {
     /* TODO: Should player interact with llist or just location */
+    /* TODO: I don't think this needs to be an attribute of a player, you only 
+     * need this information while you're moving, then you can update the 
+     * location and discard the list */
     return getListLen(&movingPlayer->locHistory);
 }
